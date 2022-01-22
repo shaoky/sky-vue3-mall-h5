@@ -1,0 +1,19 @@
+@charset "UTF-8";
+@import './mixin.scss';
+@import './theme.scss';
+
+
+.mt20 {
+  margin-top: 20px;
+}
+
+.clear {
+  clear: both;
+}
+
+.van-nav-bar {
+  :deep(.van-icon) {
+    font-size: 45px;
+    color: #555;
+  }
+}
