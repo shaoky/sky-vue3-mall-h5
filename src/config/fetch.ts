@@ -6,6 +6,7 @@ export default async (
     url: string = '',
     params: object,
     method: any = 'get',
+    upload: boolean = false
 ) => {
     return new Promise((resolve, reject) => {
         let user: any = window.localStorage.getItem('user') || ''
@@ -21,6 +22,7 @@ export default async (
             responseType: 'json',
             headers: {
                 Authorization: user.token || '',
+                'content-type': upload ? 'multipart/form-data': 'application/json'
             }
         }).then(res => {
             if (res.data.code === 401) {
