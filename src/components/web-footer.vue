@@ -19,6 +19,11 @@ const router = useRouter()
 const active = ref<string>('index')
 
 active.value = route.name as string
+const isLogin = ref<boolean>(false)
+
+const initData = () => {
+  isLogin.value = window.localStorage.getItem('user') ? true : false
+}
 
 const change = (name: string) => {
   switch (name) {
@@ -32,9 +37,15 @@ const change = (name: string) => {
       router.push({name: 'cart'})
       break
     case 'user':
-      router.push({name: 'user'})
+      if (isLogin.value) {
+        router.push({name: 'user'})
+      } else {
+        router.push({name: 'login'})
+      }
       break
   }
 }
+
+initData()
 
 </script>
