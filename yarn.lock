@@ -99,13 +99,6 @@
   resolved "https://registry.yarnpkg.com/@vant/icons/-/icons-1.7.1.tgz#49ae420302b5581e54e6894891e5a05bc76e9f87"
   integrity sha512-66LPEq89w4kl258nALZcRNd14eUJC8VajvTJwvZKOaZawz6CUeVZ6ybhedTUhQhRjeA8SyWD7dFt4ALf33Sabw==
 
-"@vant/lazyload@^1.4.0":
-  version "1.4.0"
-  resolved "https://registry.yarnpkg.com/@vant/lazyload/-/lazyload-1.4.0.tgz#e0529326917d8cb2264ee2e4eb08f1a03aab2c1d"
-  integrity sha512-KCbo+jZYPFGIlSip3FLbegdx3h+4e2tTamyO02o2eckUiCaCgaHO5bEX/sWcDm+jEZFT02PRW3Z3LRFSRxh5rw==
-  dependencies:
-    "@vant/use" "^1.3.2"
-
 "@vant/popperjs@^1.1.0":
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/@vant/popperjs/-/popperjs-1.1.0.tgz#b4edee5bbfa6fb18705986e313d4fd5f17942a0f"
@@ -113,10 +106,10 @@
   dependencies:
     "@popperjs/core" "^2.9.2"
 
-"@vant/use@^1.3.2":
-  version "1.3.3"
-  resolved "https://registry.yarnpkg.com/@vant/use/-/use-1.3.3.tgz#2a95b29764afd48a67b7e6995ce7c5374149e828"
-  integrity sha512-EM06Wgc+2sy4VhAECBTRd4NuoUdVeprcfClMdAnS1HNibk13XYd8iGNi8XqijWzrIO/KCCgudnDW9Ja/iYy+rA==
+"@vant/use@^1.3.5":
+  version "1.3.5"
+  resolved "https://registry.yarnpkg.com/@vant/use/-/use-1.3.5.tgz#fd2817850e76e3098e29d4c8d864e19207c03ab1"
+  integrity sha512-S4rfMQT+71quUbSY9sF7vJTEADVWqHxn8zUbpEl4vzI2CCJx67ri/ZHV911LpXIaZVgSSGPLE5xLV8javmbU0Q==
 
 "@vitejs/plugin-vue@^1.9.3":
   version "1.9.4"
@@ -1211,7 +1204,7 @@ less@^4.1.2:
     needle "^2.5.2"
     source-map "~0.6.0"
 
-lodash@^4.17.11, lodash@^4.17.15, lodash@^4.17.19:
+lodash@^4.17.11, lodash@^4.17.15, lodash@^4.17.19, lodash@^4.17.21:
   version "4.17.21"
   resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.21.tgz#679591c564c3bffaae8454cf0b3df370c3d6911c"
   integrity sha512-v2kDEe57lecTulaDIuNTPy3Ry4gLGJ6Z1O3vE1krgXZNrsQ+LFTGHVxVjcXPs17LhbZVGedAJv8XZ1tvj5FvSg==
@@ -1903,15 +1896,14 @@ upper-case@^2.0.2:
   dependencies:
     tslib "^2.0.3"
 
-vant@3:
-  version "3.2.8"
-  resolved "https://registry.yarnpkg.com/vant/-/vant-3.2.8.tgz#dc2b3a6bb6fc8e01df1a656e1e1a4788aab65acd"
-  integrity sha512-Nwdi+isviRoMjQlmSOC7eqZiWNZReSrrEv1eQzs8mbmW+gvhCr6H7DpRdLzIqLq9+uONfTIRofErMgfLKlXfSg==
+vant@^3.4.5:
+  version "3.4.5"
+  resolved "https://registry.yarnpkg.com/vant/-/vant-3.4.5.tgz#2934f6623d3705120607eb777ae4151ef192befe"
+  integrity sha512-3an2v6ejW9pijKmaDbSCW7Hs1R45tqtTIcedfI8hEAA5zC2Bp8cXU6Z4gUCK6/RAGOJsB+vcyLINLb1cGS/SzQ==
   dependencies:
     "@vant/icons" "^1.7.1"
-    "@vant/lazyload" "^1.4.0"
     "@vant/popperjs" "^1.1.0"
-    "@vant/use" "^1.3.2"
+    "@vant/use" "^1.3.5"
 
 vite-plugin-style-import@^1.3.0:
   version "1.3.0"
