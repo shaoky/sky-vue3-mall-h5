@@ -28,6 +28,11 @@ const routes: Array<RouteRecordRaw> = [
         component: () => import(/* webpackChunkName: "user" */ "../views/user/index.vue"),
     },
     {
+        path: "/user/set",
+        name: 'userSet',
+        component: () => import(/* webpackChunkName: "user" */ "../views/user/user-set.vue"),
+    },
+    {
         path: "/goods/info/:id",
         name: 'goodsInfo',
         component: () => import(/* webpackChunkName: "goodsInfo" */ "../views/goods/info.vue"),
@@ -43,7 +48,7 @@ const routes: Array<RouteRecordRaw> = [
         component: () => import(/* webpackChunkName: "orderConfirm" */ "../views/user/order/confirm.vue"),
     },
     {
-        path: "/user/order/pay",
+        path: "/user/order/pay/:id",
         name: 'orderPay',
         component: () => import(/* webpackChunkName: "orderPay" */ "../views/user/order/pay.vue"),
     },
@@ -61,6 +66,16 @@ const routes: Array<RouteRecordRaw> = [
         path: "/user/address/add",
         name: 'addressAdd',
         component: () => import(/* webpackChunkName: "addressInfo" */ "../views/user/address/info.vue"),
+    },
+    {
+        path: "/user/order",
+        name: 'order',
+        component: () => import(/* webpackChunkName: "orderList" */ "../views/user/order/index.vue"),
+    },
+    {
+        path: "/user/order/:id",
+        name: 'orderInfo',
+        component: () => import(/* webpackChunkName: "orderInfo" */ "../views/user/order/info.vue"),
     },
 ];
 

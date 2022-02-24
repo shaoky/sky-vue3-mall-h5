@@ -32,6 +32,19 @@
   </div>
 
   <div class="order-detail">
+    
+    <div class="cell">
+      <div class="babel">商品总额</div>
+      <div class="value">￥{{totalMoney}}</div>
+    </div>
+    <div class="cell">
+      <div class="babel">运费</div>
+      <div class="value">￥{{deliverMoney}}</div>
+    </div>
+    <!-- <div class="cell">
+      <div class="babel">订单总计</div>
+      <div class="value" style="color: #f00;">￥{{payMoney}}</div>
+    </div> -->
     <div class="cell">
       <div class="babel">留言</div>
       <div class="value">
@@ -43,18 +56,6 @@
           placeholder="请输入留言"
         />
       </div>
-    </div>
-    <div class="cell">
-      <div class="babel">商品总额</div>
-      <div class="value">￥{{totalMoney}}</div>
-    </div>
-    <div class="cell">
-      <div class="babel">运费</div>
-      <div class="value">￥{{deliverMoney}}</div>
-    </div>
-    <div class="cell">
-      <div class="babel">订单总计</div>
-      <div class="value" style="color: #f00;">￥{{payMoney}}</div>
     </div>
   </div>
 
@@ -71,7 +72,7 @@ import {
   Field as VanField,
   SubmitBar as VanSubmitBar
 } from 'vant'
-import { getAddressDefault, getOrderPreview } from '@/api/getData'
+import { getAddressDefault, getOrderPreview, createOrder } from '@/api/getData'
 const router = useRouter()
 
 let address = ref<any>({})
@@ -102,8 +103,23 @@ const goAddress = () => {
   })
 }
 
-const onSubmit = () => {
+const onSubmit = async() => {
+  const res = await createOrder({
+    addressId: address.value.id,
+    goodsList: goodsList.value.map((item: any) => ({
+      goodsId: item.id,
+      goodsNum: item.goodsNum
+    }))
+  })
 
+  if (res.orderId) {
+    router.push({
+      name: 'orderPay',
+      params: {
+        id: res.orderId
+      }
+    })
+  }
 }
 
 const onClickLeft = () => {
@@ -189,6 +205,7 @@ initData()
 }
 
 .order-detail {
+  padding-bottom: 120px;
   .cell {
     display: flex;
     align-items: center;
