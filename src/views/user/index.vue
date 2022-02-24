@@ -2,59 +2,62 @@
   <div class="header">
     <div class="user-info">
       <div class="user-imgs">
-        <img :src="user.userPhoto">
+        <img :src="user.photo">
       </div>
-      <div class="user-name">{{user.userName}}</div>
+      <div class="user-name">{{user.name}}</div>
     </div>
+    
     <div class="setting">
-      <van-icon name="setting-o" />
+      <van-icon name="setting-o" @click="$router.push({name: 'userSet'})" />
     </div>
   </div>
   <div class="my-order">
     <div class="cell">
       <div class="label">我的订单</div>
-      <div class="value">
+      <div class="value" @click="$router.push({name: 'order'})">
         所有订单<van-icon name="arrow" />
       </div>
     </div>
     <div class="status">
-      <div class="item">
-        <van-icon name="credit-pay" />
+      <div class="item" @click="$router.push({name: 'order', query: { status: 1 }})">
+        <van-icon name="credit-pay"/>
         <div class="content">待付款</div>
       </div>
-      <div class="item">
+      <div class="item" @click="$router.push({name: 'order', query: { status: 2 }})">
         <van-icon name="peer-pay" />
         <div class="content">待发货</div>
       </div>
-      <div class="item">
+      <div class="item" @click="$router.push({name: 'order', query: { status: 3 }})">
         <van-icon name="debit-pay" />
         <div class="content">待收货</div>
       </div>
-      <div class="item">
+      <div class="item" @click="$router.push({name: 'order', query: { status: 4 }})">
         <van-icon name="sign" />
         <div class="content">交易完成</div>
       </div>
-      <div class="item">
+      <!-- <div class="item" @click="$router.push({name: 'order', query: { status: 1 }})">
         <van-icon name="cash-on-deliver" />
         <div class="content">退款/售后</div>
-      </div>
+      </div> -->
     </div>
   </div>
   <div class="bg"></div>
   <div class="cells">
-    <div class="item" @click="$router.push({path:'/user/coupon/index'})">
+    <!-- <div class="item" @click="$router.push({path:'/user/coupon/index'})">
       <div class="label">
         <i class="iconfont icon-youhuiquan"></i>
         <div class="content">我的优惠券</div>
       </div>
       <i class="iconfont icon-more"></i>
-    </div>
+    </div> -->
     <div class="item" @click="$router.push({name:'address'})">
       <div class="label">
         <i class="iconfont icon-dizhi"></i>
         <div class="content">地址管理</div>
       </div>
-      <i class="iconfont icon-more"></i>
+      <i class="iconfont icon-more">
+        <van-icon name="arrow" />
+      </i>
     </div>
     <div class="item">
       <div class="label">
@@ -74,9 +77,9 @@ import WebFooter from '@/components/web-footer.vue'
 import { Icon as VanIcon } from 'vant'
 import { getUserInfo } from '@/api/getData'
 
-let user = ref({
-  userPhoto: 'http://thirdwx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTLVia94J5onHScuW9QN9JvxCBib283dmzqVYTgE5AVn7PMcgyt8vm3FE5MjsMcEvANh34cYukBnMmXw/132',
-  userName: 'shaoky'
+let user = ref<any>({
+  photo: '',
+  name: ''
 })
 
 const initData = () => {
@@ -84,7 +87,8 @@ const initData = () => {
 }
 
 const _getUserInfo = async() => {
-  // const res = await getUserInfo()
+  const data = await getUserInfo()
+  user.value = data.user
 }
 
 initData()
@@ -130,7 +134,7 @@ initData()
     display: flex;
     justify-content: space-between;
     .label {
-      font-size: 40px;
+      font-size: 28px;
       color:#000;
     }
     .value {
