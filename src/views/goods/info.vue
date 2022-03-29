@@ -21,8 +21,9 @@
     </van-tabs>
 
     <div class="footer">
-      <div class="collect">
-        <van-icon name="like-o" />
+      <div class="collect" @click="onCollect">
+        <van-icon name="like-o" v-if="!goods.isCollect" />
+        <van-icon name="like" v-else />
         <span>收藏</span>
       </div>
       <div class="cart">
@@ -39,8 +40,8 @@
 </template>
 <script setup lang="ts">
 // @ts-ignore
-import { ref } from 'vue'
-import { getGoodsInfo, addCart } from '@/api/getData'
+import { ref, reactive, toRefs, defineExpose } from 'vue'
+import { getGoodsInfo, addCart, addGoodsCollect, deleteGoodsCollect } from '@/api/getData'
 import { useRoute, useRouter } from 'vue-router'
 import { 
   Swipe as VanSwipe,
@@ -59,6 +60,7 @@ interface GoodsInfoModel {
   bannerList: string[]
   imageUrl: string
   saleCount: number
+  isCollect: boolean
 }
 
 const route = useRoute()
@@ -71,7 +73,8 @@ let goods = ref<GoodsInfoModel>({
   content: '',
   bannerList: [],
   imageUrl: '',
-  saleCount: 0
+  saleCount: 0,
+  isCollect: false
 })
 let tabValue = ref()
 
@@ -83,8 +86,10 @@ const _getGoodsInfo = async() => {
   const res: any = await getGoodsInfo({
     id: route.params.id
   })
-
   goods.value = res.info
+  if(res.info.bannerList.length === 0) {
+    goods.value.bannerList.push(goods.value.imageUrl)
+  }
 }
 
 const _addCart = async() => {
@@ -99,6 +104,22 @@ const goCart = () => {
   router.push({
     name: 'cart'
   })
+}
+
+const onCollect = async() => {
+  let data
+  if (goods.value.isCollect === false) {
+    data = await addGoodsCollect({id: +route.params.id})
+    if (data) {
+      goods.value.isCollect = true
+    }
+  } else {
+    data = await deleteGoodsCollect({id: +route.params.id})
+    if (data) {
+      goods.value.isCollect = false
+    }
+  }
+
 }
 
 initData()
@@ -179,5 +200,9 @@ initData()
     margin: 0 20px 0 0;
     background: #f2140c;
   }
+}
+
+.van-icon-like {
+  color: #f2140c;
 }
 </style>

@@ -21,6 +21,7 @@
 // @ts-ignore
 import { ref } from 'vue'
 import { NavBar as VanNavBar, AddressEdit as VanAddressEdit } from 'vant'
+// @ts-ignore
 import type { AddressEditInfo } from 'vant'
 import { getRegion, addAddress, updateAddress, getAddressInfo, deleteAddress } from '@/api/getData'
 import { useRoute } from 'vue-router'
@@ -30,6 +31,7 @@ const route = useRoute()
 
 let id = +route.params.id
 let searchResult = ref<any>([])
+// @ts-ignore
 let addressInfo = ref<AddressEditInfo>()
 let areaList: any = {
   province_list: {

@@ -50,9 +50,18 @@
       </div>
       <i class="iconfont icon-more"></i>
     </div> -->
+    <div class="item" @click="$router.push({name:'collect'})">
+      <div class="label">
+        <!-- <i class="iconfont icon-dizhi"></i> -->
+        <div class="content">我的收藏</div>
+      </div>
+      <i class="iconfont icon-more">
+        <van-icon name="arrow" />
+      </i>
+    </div>
     <div class="item" @click="$router.push({name:'address'})">
       <div class="label">
-        <i class="iconfont icon-dizhi"></i>
+        <!-- <i class="iconfont icon-dizhi"></i> -->
         <div class="content">地址管理</div>
       </div>
       <i class="iconfont icon-more">
@@ -61,7 +70,7 @@
     </div>
     <div class="item">
       <div class="label">
-        <i class="iconfont icon-kefu"></i>
+        <!-- <i class="iconfont icon-kefu"></i> -->
         <div class="content">服务热线</div>
       </div>
       <div class="value">123456789</div>

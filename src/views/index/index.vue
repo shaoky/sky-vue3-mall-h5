@@ -21,7 +21,7 @@
     v-model:loading="loading"
     :finished="finished"
     finished-text="没有更多了"
-    @load="getData"
+    @load="_getGoodsList"
     class="goods"
   >
     <goods 
@@ -37,7 +37,7 @@
 
 <script setup lang="ts">
 // @ts-ignore
-import { ref, onMounted, reactive } from 'vue'
+import { ref, onMounted } from 'vue'
 import { Swipe as vanSwipe, SwipeItem as vanSwipeItem, List as VanList } from 'vant'
 import { getIndexData, getGoodsList } from '@/api/getData'
 // @ts-ignore
@@ -53,12 +53,13 @@ let adList = ref<Array<adModel>>([])
 let iconList = ref<Array<adModel>>([])
 let loading = ref<boolean>(false)
 let finished = ref<boolean>(false)
-let goodsList = ref([])
+let goodsList = ref<any>([])
+let size = ref(20)
+let page = ref(1)
 
 
 onMounted(() => {
   getData()
-  _getGoodsList()
 })
 
 const getData = async() => {
@@ -69,10 +70,16 @@ const getData = async() => {
 
 const _getGoodsList = async() => {
   const res: any = await getGoodsList({
-    page: 1,
-    size: 20
+    page: page.value,
+    size: size.value
   })
-  goodsList.value = res.list
+  goodsList.value = [...res.list, ...goodsList.value]
+  loading.value = false
+  if (res.list.length < size.value) {
+    finished.value = true
+  } else {
+    page.value++
+  }
 }
 
 </script>

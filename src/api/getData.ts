@@ -4,6 +4,7 @@ import { GoodsListRequest } from './interface'
 
 // @ts-ignore
 export const uploadImage = (data) => fetch('/common/image/add', data, 'post', true) as Promise<Models['POST/common/image/add']['Res']['data']>
+export const getQNToken = () => fetch('/v1/upload/qn-uptoken', {}, 'get')
 
 export const login = (data: Models['POST/h5/login']['Req']) => fetch('/h5/login', data, 'post') as Promise<Models['POST/h5/login']['Res']>
 export const getUserInfo = () => fetch('/h5/user/info', {}, 'get') as Promise<Models['GET/h5/user/info']['Res']['data']>
@@ -13,6 +14,9 @@ export const getIndexData = (data: any) => fetch('/h5/index', data, 'get')
 export const getGoodsList = (data: GoodsListRequest) => fetch('/h5/goods/list', data, 'get')
 export const getCategoryList = (data: any) => fetch('/admin/goods/type/list', data, 'get')
 export const getGoodsInfo = (data: any) => fetch('/h5/goods/info', data, 'get')
+export const addGoodsCollect = (data: Models['POST/h5/goods/collect/add']['Req']) => fetch('/h5/goods/collect/add', data, 'post') as Promise<Models['POST/h5/goods/collect/add']['Res']>
+export const deleteGoodsCollect = (data: Models['POST/h5/goods/collect/delete']['Req']) => fetch('/h5/goods/collect/delete', data, 'post') as Promise<Models['POST/h5/goods/collect/delete']['Res']>
+export const getGoodsCollect = () => fetch('/h5/goods/collect/list', {}, 'get') as Promise<Models['GET/h5/goods/collect/list']['Res']['data']>
 
 // 购物车
 export const getCartList = () => fetch('/h5/cart/list', {}, 'get') as Promise<Models['GET/h5/cart/list']['Res']['data']>
