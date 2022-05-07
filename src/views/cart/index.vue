@@ -86,7 +86,6 @@ const onClickLeft = () => {
 const moveStart = (item: any) => {
   let timeValue = 0
   timer = setInterval(() => {
-    console.log(timeValue)
     timeValue++
     if (timeValue === 1) {
       activeGoods.value = item.goodsId
@@ -143,9 +142,15 @@ const _updateCart = async(item: any) => {
 // 提交订单
 const onSubmit = () => {
   router.push({
-    name: 'orderConfirm'
+    name: 'orderConfirm',
+    query: {
+      type: 'cart',
+      // goods:
+    }
   })
 }
+
+// 获取时间
 
 
 initData()
@@ -193,9 +198,6 @@ initData()
     position: relative;
     flex: 1;
     margin: 0 20px;
-    .title {
-
-    }
     .price {
       position: absolute;
       bottom: 0;

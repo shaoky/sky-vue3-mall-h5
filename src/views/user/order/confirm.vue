@@ -22,6 +22,7 @@
         </div>
         <div class="goods-info">
           <div class="title">{{item.title}}</div>
+          <div class="spec">{{item.skuSpec}}</div>
           <div class="bottom">
             <span class="price">￥{{item.price}}</span>
             <span>x{{item.goodsNum}}</span>
@@ -49,7 +50,7 @@
       <div class="babel">留言</div>
       <div class="value">
         <van-field
-          v-model="message"
+          v-model="remark"
           rows="1"
           autosize
           type="textarea"
@@ -59,42 +60,57 @@
     </div>
   </div>
 
-  <van-submit-bar :price="price" button-text="提交订单" @submit="onSubmit" />
+  <van-submit-bar :price="Number(payMoney)*100" button-text="提交订单" @submit="onSubmit" />
 
 </template>
 <script setup lang="ts">
 // @ts-ignore
 import { ref, computed } from 'vue'
-import { useRouter } from 'vue-router'
+import { useRoute, useRouter } from 'vue-router'
 import { 
   NavBar as VanNavBar,
   Icon as VanIcon,
   Field as VanField,
   SubmitBar as VanSubmitBar
 } from 'vant'
-import { getAddressDefault, getOrderPreview, createOrder } from '@/api/getData'
+import { getAddressDefault, getOrderGoodsPreview, getOrderPreview, createOrder } from '@/api/getData'
+const route = useRoute()
 const router = useRouter()
 
 let address = ref<any>({})
 let goodsList = ref<any>([])
 let deliverMoney = ref<string>()
 let totalMoney = ref<string>()
-let payMoney = ref<string>()
-let message = ref<string>()
+let payMoney = ref<string>('0')
+let remark = ref<string>('')
 
-let price = computed(() => {
-  return Number(payMoney.value)*100
-})
+// let price = computed(() => {
+//   return Number(payMoney.value)*100
+// })
 
 const initData = async() => {
   const res = await getAddressDefault()
   address.value = res.info
 
-  const data = await getOrderPreview()
-  goodsList.value = data.goodsList
-  totalMoney.value = data.totalMoney
-  deliverMoney.value = data.deliverMoney
-  payMoney.value = data.payMoney
+  if (route.query.type === 'goods') {
+    const data = await getOrderGoodsPreview({
+      goodsId: Number(route.query.goodsId),
+      goodsNum: Number(route.query.goodsNum),
+      skuId: Number(route.query.skuId) || undefined
+    })
+    goodsList.value = data.goodsList
+    totalMoney.value = data.totalMoney
+    deliverMoney.value = data.deliverMoney
+    payMoney.value = data.payMoney
+  }
+
+  if (route.query.type === 'cart') {
+    const data = await getOrderPreview()
+    goodsList.value = data.goodsList
+    totalMoney.value = data.totalMoney
+    deliverMoney.value = data.deliverMoney
+    payMoney.value = data.payMoney
+  }
 }
 
 const goAddress = () => {
@@ -106,14 +122,16 @@ const goAddress = () => {
 const onSubmit = async() => {
   const res = await createOrder({
     addressId: address.value.id,
+    remark: remark.value,
     goodsList: goodsList.value.map((item: any) => ({
       goodsId: item.id,
-      goodsNum: item.goodsNum
+      goodsNum: item.goodsNum,
+      skuId: item.skuId
     }))
   })
 
   if (res.orderId) {
-    router.push({
+    router.replace({
       name: 'orderPay',
       params: {
         id: res.orderId
@@ -161,9 +179,6 @@ initData()
   } 
 }
 
-.goods {
-
-}
 .goods-item {
   display: flex;
   height: 180px;
@@ -183,8 +198,9 @@ initData()
     position: relative;
     flex: 1;
     margin: 0 20px;
-    .title {
-
+    .spec {
+      margin-top: 5px;
+      color: #999;
     }
     .bottom {
       position: absolute;

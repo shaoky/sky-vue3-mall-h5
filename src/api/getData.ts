@@ -33,9 +33,12 @@ export const getAddressInfo = (data: Models['GET/h5/user/address/info']['Req']) 
 export const deleteAddress = (data: Models['POST/h5/user/address/delete']['Req']) => fetch('/h5/user/address/delete', data, 'post') as Promise<Models['POST/h5/user/address/delete']['Res']['data']>
 export const getAddressDefault = () => fetch('/h5/user/address/default', {}, 'get') as Promise<Models['GET/h5/user/address/default']['Res']['data']>
 
+export const getOrderGoodsPreview = (data: Models['GET/h5/order/goodsPreview']['Req']) => fetch('/h5/order/goodsPreview', data, 'get') as Promise<Models['GET/h5/order/goodsPreview']['Res']['data']>
 export const getOrderPreview = () => fetch('/h5/order/preview', {}, 'get') as Promise<Models['GET/h5/order/preview']['Res']['data']>
 export const createOrder = (data: Models['POST/h5/order/add']['Req']) => fetch('/h5/order/add', data, 'post') as Promise<Models['POST/h5/order/add']['Res']['data']>
 export const getOrderInfo = (data: Models['GET/h5/order/info']['Req']) => fetch('/h5/order/info', data, 'get') as Promise<Models['GET/h5/order/info']['Res']['data']>
 export const getOrderList = (data: Models['GET/h5/order/list']['Req']) => fetch('/h5/order/list', data, 'get') as Promise<Models['GET/h5/order/list']['Res']['data']>
 export const cancelOrder = (data: Models['POST/h5/order/cancel']['Req']) => fetch('/h5/order/cancel', data, 'post') as Promise<Models['POST/h5/order/cancel']['Res']['data']>
 export const deleteOrder = (data: Models['POST/h5/order/delete']['Req']) => fetch('/h5/order/delete', data, 'post') as Promise<Models['POST/h5/order/delete']['Res']['data']>
+export const confirmOrder = (data: Models['POST/h5/order/confirm']['Req']) => fetch('/h5/order/confirm', data, 'post') as Promise<Models['POST/h5/order/confirm']['Res']['data']>
+export const payOrder = (data: Models['POST/h5/order/pay']['Req']) => fetch('/h5/order/pay', data, 'post') as Promise<Models['POST/h5/order/pay']['Res']['data']>
