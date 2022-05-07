@@ -1,4 +1,5 @@
 <template>
+  <van-nav-bar title="我的收藏" fixed left-arrow @click-left="onClickLeft" />
   <div class="goods">
     <div class="goods-item" v-for="item in goods" @click="goGoodsInfo(item)">
       <div class="goods-image">
@@ -18,8 +19,8 @@
 // @ts-ignore
 import { ref } from 'vue'
 import { getGoodsCollect } from '@/api/getData'
-import Goods from './components/goods.vue'
 import { useRouter } from 'vue-router'
+import { NavBar as VanNavBar } from 'vant'
 
 const router = useRouter()
 
@@ -43,10 +44,15 @@ const goGoodsInfo = (item: any) => {
   })
 }
 
+const onClickLeft = () => {
+  history.back()
+}
+
 initData()
 </script>
 <style lang="scss" scoped>
 .goods {
+  margin-top: 100px;
   padding: 20px;
 }
 .goods-item {

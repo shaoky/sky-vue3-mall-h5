@@ -15,8 +15,11 @@
       <van-tab title="商品介绍">
         <div class="content" v-html="goods.content"></div>
       </van-tab>
-      <van-tab title="规格参数">
-        待开发
+      <van-tab title="商品参数">
+        <div class="attr-list" v-for="item of goods.attr">
+          <div class="name">{{item.name}}</div>
+          <div class="value">{{item.value}}</div>
+        </div>
       </van-tab>
     </van-tabs>
 
@@ -31,18 +34,22 @@
         <span @click="goCart">购物车</span>
       </div>
       <div class="btns">
-        <div class="add-cart" @click="_addCart">加入购物车</div>
-        <div class="buy">立即购买</div>
+        <div class="add-cart" @click="openCart(true)">加入购物车</div>
+        <div class="buy" @click="openCart(false)">立即购买</div>
       </div>
     </div>
+
+    <goods-bay-pop :goods="goods" ref="goodsBayPopRef" @success="_addCart"></goods-bay-pop>
     
   </div>
 </template>
 <script setup lang="ts">
 // @ts-ignore
-import { ref, reactive, toRefs, defineExpose } from 'vue'
+import { ref, defineExpose } from 'vue'
 import { getGoodsInfo, addCart, addGoodsCollect, deleteGoodsCollect } from '@/api/getData'
 import { useRoute, useRouter } from 'vue-router'
+// @ts-ignore
+import GoodsBayPop from './components/goods-bay-pop.vue'
 import { 
   Swipe as VanSwipe,
   SwipeItem as VanSwipeItem,
@@ -52,7 +59,7 @@ import {
   Toast
 } from 'vant'
 
-interface GoodsInfoModel {
+export interface GoodsInfoModel {
   id: number
   title: string
   price: string
@@ -61,6 +68,18 @@ interface GoodsInfoModel {
   imageUrl: string
   saleCount: number
   isCollect: boolean
+  spec: Spec[]
+  attr: Attr[]
+}
+
+export interface Spec {
+  name: string
+  value: string[]
+}
+
+export interface Attr {
+  name: string
+  value: string
 }
 
 const route = useRoute()
@@ -74,9 +93,13 @@ let goods = ref<GoodsInfoModel>({
   bannerList: [],
   imageUrl: '',
   saleCount: 0,
-  isCollect: false
+  isCollect: false,
+  spec: [],
+  attr: []
 })
 let tabValue = ref()
+let goodsBayPopRef = ref()
+
 
 const initData = () => {
   _getGoodsInfo()
@@ -87,17 +110,40 @@ const _getGoodsInfo = async() => {
     id: route.params.id
   })
   goods.value = res.info
+  if (goods.value.spec) {
+    goods.value.spec.forEach((item: any) => {
+      item.activeName = item.value[0]
+    })
+  }
   if(res.info.bannerList.length === 0) {
     goods.value.bannerList.push(goods.value.imageUrl)
   }
 }
 
-const _addCart = async() => {
-  const res = await addCart({
-    goodsId: +route.params.id,
-    goodsNum: 1
-  })
-  Toast.success('添加成功')
+const openCart = (isCart: boolean) => {
+  goodsBayPopRef.value.open(isCart)
+}
+
+const _addCart = async(data?: any) => {
+  if (data.isCart) {
+   await addCart({
+      goodsId: +route.params.id,
+      goodsNum: 1,
+      skuId: data ? data.skuId : undefined
+    })
+    Toast.success('添加成功')
+  } else {
+    router.replace({
+      name: 'orderConfirm',
+      query: {
+        type: 'goods',
+        goodsNum: data.goodsNum,
+        goodsId: goods.value.id,
+        skuId: data ? data.skuId : undefined
+      }
+    })
+  }
+  
 }
 
 const goCart = () => {
@@ -152,6 +198,17 @@ initData()
   &:deep(img) {
     max-width: 100%;
     display: block;
+  }
+}
+
+.attr-list {
+  display: flex;
+  font-size: 28px;
+  padding: 0 30px;
+  margin-bottom: 10px;
+  .name {
+    width: 300px;
+    color: #666;
   }
 }
 

@@ -2,8 +2,10 @@
   <div class="header">
     <div class="title">支付剩余时间</div>
     <div class="cell">
-      <span>{{time.minute}}</span>：<span>{{time.second}}</span>
+      <span>{{time.minute || '00'}}</span>：<span>{{time.second || '00'}}</span>
+      
     </div>
+    <div class="cell"  v-if="time.minute === '' && time.second === ''" style="font-size: 12px;">(支付时间已到，请取消重新下单)</div>
     <div class="value">订单应付金额</div>
     <div class="value">￥{{totalMoney}}</div>
   </div>
@@ -13,10 +15,11 @@
 <script setup lang="ts">
 // @ts-ignore
 import { ref, reactive } from 'vue'
-import { useRoute } from 'vue-router'
-import { getOrderInfo } from '@/api/getData'
+import { useRoute, useRouter } from 'vue-router'
+import { getOrderInfo, payOrder } from '@/api/getData'
 
 const route = useRoute()
+const router = useRouter()
 let totalMoney = ref<any>()
 let time = reactive<any>({
   minute: '',
@@ -57,8 +60,16 @@ const setCountdown = (n: number) => {
   }, 1000)
 }
 
-const onPay = () => {
-  alert('微信支付')
+const onPay = async() => {
+  const data = await payOrder({id: +route.params.id})
+  if (data) {
+    router.replace({
+      name: 'orderSuccess',
+      query: {
+        id: +route.params.id
+      }
+    })
+  }
 }
 
 initData()

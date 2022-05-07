@@ -5,6 +5,7 @@
     </div>
     <div class="goods-info">
       <div class="goods-title van-multi-ellipsis--l2">{{goods.title}}</div>
+      <div class="goods-spec">{{goods.skuSpec}}</div>
       <div class="goods-cell">
         <div class="price">￥{{goods.price}}</div>
         <div class="number">x{{goods.number}}</div>
@@ -15,6 +16,7 @@
 <script setup lang="ts">
 // @ts-ignore
 import { withDefaults, defineProps } from 'vue'
+import { useRouter } from 'vue-router'
 
 export interface GoodsModel {
   id: number;
@@ -22,18 +24,23 @@ export interface GoodsModel {
   imageUrl?: string;
   price: number;
   number: number;
+  skuSpec?: string;
 }
 
+let router = useRouter()
+
 let props = withDefaults(defineProps<{
-  goods: GoodsModel
+  goods: GoodsModel,
+  orderId?: number
 }>(), {
   goods: () => ({
     id: 0,
     title: '',
     price: 0,
-    number: 0
+    number: 0,
   })
 })
+
 </script>
 <style lang="scss" scoped>
 .goods {
@@ -51,19 +58,22 @@ let props = withDefaults(defineProps<{
   }
 }
 .goods-info {
+  position: relative;
   margin-left: 20px;
   flex: 1;
-  .goods-title {
-
+ 
+  .goods-spec {
+    color: #999;
   }
   .goods-cell {
-    margin-top: 35px;
+    width: 100%;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    // margin-top: 35px;
     display: flex;
     .price {
       flex: 1;
-    }
-    .number {
-
     }
   }
 }

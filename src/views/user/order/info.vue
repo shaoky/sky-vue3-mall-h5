@@ -19,7 +19,7 @@
       <div class="left"><van-icon name="orders-o" /><span>{{order.createTime}}</span><van-icon name="arrow" /></div>
     </div>
     <div class="goods">
-      <goods :goods="goods" v-for="goods in order.goodsList"></goods>
+      <goods :goods="goods" v-for="goods in order.goodsList" :key="goods.id"></goods>
     </div>
   </div>
 
@@ -38,18 +38,20 @@
     </div>
   </div>
 
-  <a href="tel: 13700000000" class="btn-tel">联系客服</a>
+  <div class="btn-tel" v-if="order.status === 3" @click="onConfirm">确认收货</div>
 </template>
 <script setup lang="ts">
 // @ts-ignore
 import { ref, reactive, computed } from 'vue'
-import { getOrderInfo } from '@/api/getData'
+import { getOrderInfo, confirmOrder } from '@/api/getData'
 import { useRoute } from 'vue-router'
 // @ts-ignore
 import Goods from './components/goods.vue'
+import { Models } from '@/rapper'
+
 
 const route = useRoute()
-let order = ref<any>({})
+let order = ref<Models['GET/h5/order/info']['Res']['data']['info']>({})
 
 let statusDesc = computed(() => {
   if (order.value.status === 1) {
@@ -65,6 +67,13 @@ const initData = () => {
 const _getOrderInfo = async() => {
   const data = await getOrderInfo({id: +route.params.id})
   order.value = data.info
+}
+
+const onConfirm = async() => {
+  const data = await confirmOrder({id: +route.params.id})
+  if (data) {
+    _getOrderInfo()
+  }
 }
 
 initData()
@@ -146,9 +155,6 @@ initData()
     margin-bottom: 20px;
     .label {
       flex: 1;
-    }
-    .value {
-
     }
   }
 }

@@ -19,15 +19,15 @@
           <div class="status" :class="{ cancel: item.status === 5 }">{{item.statusName}}</div>
         </div>
         <div class="goods">
-          <goods :goods="goods" v-for="goods in item.goodsList"></goods>
+          <goods :goods="goods" :orderId="item.id" v-for="goods in item.goodsList" @click="$router.push({name: 'orderInfo', params: {id: item.id}})"></goods>
         </div>
         <div class="order-info">
           <div class="order-total">
-            <div class="name"></div>
-            <div class="price"></div>
+            <div class="name">订单总计</div>
+            <div class="price">￥{{item.totalMoney}}</div>
           </div>
           <div class="order-btn">
-            <van-button type="default" size="small" @click="_cancelOrder(item)" v-if="item.status !== 5">取消订单</van-button>
+            <van-button type="default" size="small" @click="_cancelOrder(item)" v-if="item.status === 1">取消订单</van-button>
             <van-button type="default" size="small" @click="_deleteOrder(item.id)" v-if="item.status === 5">删除订单</van-button>
             <van-button 
               type="default" 
@@ -150,6 +150,16 @@ initData()
   }
   .order-info {
     padding: 20px;
+  }
+  .order-total {
+    display: flex;
+    margin: 20px 0;
+    .name {
+      flex: 1;
+    }
+    .price {
+      color: #f00;
+    }
   }
   .order-btn {
     text-align: right;

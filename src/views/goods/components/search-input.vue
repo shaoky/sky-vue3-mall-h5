@@ -98,7 +98,6 @@ const onFocus = (value: any) => {
 
 //搜索按钮
 const onSearch = () => {
-  console.log(route.query)
   onKeyword({
     keyword: searchValue.value
   })

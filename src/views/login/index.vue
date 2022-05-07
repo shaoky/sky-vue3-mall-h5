@@ -96,7 +96,6 @@ const onLogin = async() => {
     tel: tel.value,
     code: sms.value
   })
-  console.log(res)
   localStorage.setItem('user', JSON.stringify(res))
   router.push({name: 'index'})
   
