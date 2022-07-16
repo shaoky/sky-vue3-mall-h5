@@ -2,6 +2,9 @@
 
 技术栈：vue3 + ts + vite2
 
+### 项目链接
+1. h5[在线访问地址](http://h5.shop.shaoky.com/)
+2. 管理后台[项目链接](https://github.com/shaoky/vue3-mall-admin)
 
 ### 提交规则
 格式：前缀 + 英文冒号: + 1个空格 + 描述
