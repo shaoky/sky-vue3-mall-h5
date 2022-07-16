@@ -4,6 +4,16 @@ import router from "./router";
 
 router.beforeEach((to, from , next) => {
     document.title = 'xxx商城'
+    const userLogin = window.localStorage.getItem('user') ? true : false
+    if (to.meta.login) {
+        if (userLogin) {
+            next()
+        } else {
+            next({ name: 'login', query: {
+                status: 1
+            } })
+        }
+    }
     next()
 })
 

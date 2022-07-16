@@ -24,12 +24,13 @@
 <script setup lang="ts">
 // @ts-ignore
 import { ref } from 'vue'
-import { useRouter } from 'vue-router';
+import { useRouter, useRoute } from 'vue-router';
 import { NavBar as VanNavBar, Field as VanField, Toast } from 'vant'
 import { getSms, login } from '@/api/getData'
 import { phoneValidate } from '@/utils/validate'
 
 const router = useRouter()
+const route = useRoute()
 
 let sms = ref<string>('')
 let tel = ref<string>('')
@@ -97,7 +98,11 @@ const onLogin = async() => {
     code: sms.value
   })
   localStorage.setItem('user', JSON.stringify(res))
-  router.push({name: 'index'})
+  if (route.query.status === '1') {
+    onClickLeft()
+  } else {
+    router.push({name: 'index'})
+  }
   
 }
 </script>
