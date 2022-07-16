@@ -2,7 +2,7 @@
   <van-popup v-model:show="show" position="bottom">
     <div class="goods-info">
       <div class="image">
-        <img :src="goods.imageUrl" alt="">
+        <img :src="goods.imageUrl" alt="" @click="clickImage">
       </div>
       <div class="right">
         <div class="price">￥{{goods.price}}</div>
@@ -17,7 +17,7 @@
           <div 
             class="item" 
             :class="{ active: item.activeName === item1 }" 
-            @click="item.activeName = item1" 
+            @click="item.activeName = item1, onSpec()" 
             v-for="item1 of item.value"
           >{{item1}}</div>
         </div>
@@ -37,7 +37,7 @@
 <script setup lang="ts">
 // @ts-ignore
 import { ref, defineProps, defineExpose, defineEmits } from 'vue'
-import { Popup as VanPopup, Stepper as VanStepper } from 'vant'
+import { Popup as VanPopup, Stepper as VanStepper, Toast, ImagePreview } from 'vant'
 
 const props = defineProps({
   goods: <any>{},
@@ -46,8 +46,17 @@ let show = ref(false)
 let data = ref({
   goodsNum: 1
 })
-const emit = defineEmits(['success'])
+const emit = defineEmits(['success', 'update'])
 let cart = ref(true)
+
+let isSku = ref(false)
+
+const initData = () => {
+  if (props.goods.sku.length > 0) {
+    isSku.value = true
+  }
+  onSpec()
+}
 
 const open = (isCart = true) => {
   cart.value = isCart
@@ -55,6 +64,10 @@ const open = (isCart = true) => {
 }
 
 const onClick = () => {
+  if (props.goods.stock === 0) {
+    Toast.fail('库存不足')
+    return 
+  }
   let arr = []
   let skuId
   for(let item of props.goods.spec) {
@@ -81,6 +94,25 @@ const onClick = () => {
   show.value = false
 }
 
+const onSpec = () => {
+  let activeNames = []
+  for (let item of props.goods.spec) {
+    activeNames.push(item.activeName)
+  }
+  for (let item of props.goods.sku) {
+    if (item.spec === activeNames.toString()) {
+      props.goods.stock = item.stock
+      props.goods.price = item.price
+      props.goods.imageUrl = item.imageUrl
+    }
+  }
+}
+
+const clickImage = () => {
+  ImagePreview([props.goods.imageUrl])
+}
+
+initData()
 defineExpose({ open })
 </script>
 <style>
