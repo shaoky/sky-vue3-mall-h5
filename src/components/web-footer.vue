@@ -8,6 +8,8 @@
 </template>
 
 <script setup lang="ts">
+// @ts-ignore
+import { onActivated } from 'vue'
 import { Tabbar, TabbarItem } from 'vant'
 // @ts-ignore
 import { ref } from 'vue'
@@ -18,11 +20,10 @@ const router = useRouter()
 
 const active = ref<string>('index')
 
-active.value = route.name as string
-const isLogin = ref<boolean>(false)
+
 
 const initData = () => {
-  isLogin.value = window.localStorage.getItem('user') ? true : false
+  active.value = route.name as string
 }
 
 const change = (name: string) => {
@@ -37,15 +38,19 @@ const change = (name: string) => {
       router.push({name: 'cart'})
       break
     case 'user':
-      if (isLogin.value) {
         router.push({name: 'user'})
-      } else {
-        router.push({name: 'login'})
-      }
       break
   }
 }
-
+onActivated(() => {
+  initData()
+})
 initData()
 
 </script>
+
+<style lang="scss">
+.van-tabbar--fixed {
+  position: fixed!important;;
+}
+</style>
