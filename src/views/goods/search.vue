@@ -14,13 +14,12 @@
       :goods="item">
     </goods>
   </van-list>
-  <web-footer></web-footer>
 </template>
 <script setup lang="ts">
 // @ts-ignore
-import { ref } from 'vue'
+import { ref, onActivated } from 'vue'
+import { useRoute } from 'vue-router'
 // @ts-ignore
-import WebFooter from '@/components/web-footer.vue'
 import { List as VanList } from 'vant'
 import { getGoodsList } from '@/api/getData'
 // @ts-ignore
@@ -31,6 +30,7 @@ import Search from './components/search-input.vue'
 import Screen from './components/search-screen.vue'
 import { Direction } from './components/search-screen.vue'
 
+let route = useRoute()
 
 let goodsList = ref<GoodsModel[]>([])
 let loading = ref<boolean>(false)
@@ -40,6 +40,8 @@ let size = ref<number>(10)
 let keyword = ref<string>('')
 
 const initData = () => {
+  goodsList.value = []
+  keyword.value = route.query.keyword as string
   // _getGoodsList()
 }
 
@@ -75,6 +77,13 @@ const screenChange = (index: number, value: Direction) => {
   _getGoodsList()
 }
 
+onActivated(() => {
+  if (route.query.keyword !== keyword.value) {
+    initData()
+    _getGoodsList()
+  }
+})
+
 initData()
 </script>
 <style lang="scss" scoped>
@@ -84,9 +93,6 @@ initData()
 .goods {
   display: flex;
   flex-wrap: wrap;
-  // margin-top: 100px;
-  // padding: 0 20px;
-  padding-bottom: 100px;
   background: #f5f5f5;
 }
 

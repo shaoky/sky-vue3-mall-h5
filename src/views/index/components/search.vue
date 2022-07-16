@@ -22,7 +22,7 @@
 </template>
 <script setup lang="ts">
 // @ts-ignore
-import { ref, watchEffect } from 'vue'
+import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { Icon, Field } from 'vant'
 
@@ -66,23 +66,27 @@ let searchKeywordList = ref<Keyword[]>([
   }
 ])
 
-watchEffect(() => {
-  console.log(searchValue.value)
-})
-
 const clickSearch = () => {
   isShow.value = true
+  // @ts-ignore
+  document.querySelector('body').setAttribute('style', 'position: fixed')
 }
 
 const onSearch = () => {
+  // @ts-ignore
+  document.querySelector('body').setAttribute('style', 'position: static')
   router.push({name: 'search', query: {keyword: searchValue.value}})
 }
 
 const onBack = () => {
   isShow.value = false
+  // @ts-ignore
+  document.querySelector('body').setAttribute('style', 'position: static')
 }
 
 const onHotSearch = (data: Keyword) => {
+  // @ts-ignore
+  document.querySelector('body').setAttribute('style', 'position: static')
   router.push({
     name: 'search',
     query: {
@@ -178,10 +182,11 @@ const onHotSearch = (data: Keyword) => {
   .title {
     font-size: 30px;
     color: #232326;
+    margin-bottom: 20px;
   }
   span {
     float: left;
-    margin-right: 20px;
+    margin: 0 20px 20px 0;
     padding: 0 20px;
     height: 52px;
     line-height: 52px;

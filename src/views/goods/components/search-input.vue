@@ -19,7 +19,7 @@
 </template>
 <script setup lang="ts">
 // @ts-ignore
-import { ref, defineEmits } from 'vue'
+import { ref, defineEmits, onActivated } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { Field as VanField, Icon as VanIcon } from 'vant'
 
@@ -126,6 +126,10 @@ const onKeyword = (data: Keyword) => {
   emit('updateKeyword', data.keyword)
 }
 
+onActivated(() => {
+  initData()
+})
+
 initData()
 </script>
 <style lang="scss" scoped>
@@ -184,6 +188,8 @@ initData()
     }
   }
   .list {
+    position: fixed;
+    width: 100%;
     background: #fff;
     .item {
       display: flex;
