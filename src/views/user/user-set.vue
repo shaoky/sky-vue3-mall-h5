@@ -53,7 +53,7 @@ const afterRead = async(file: any) => {
  
 const outLogin = () => {
   window.localStorage.clear()
-  router.push('/')
+  router.push({name: 'index'})
 }
 
 initData()
