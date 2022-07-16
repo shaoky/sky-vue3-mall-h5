@@ -1,4 +1,4 @@
-/* md5: 2aa7118f3b556d17be2600b9896397ae */
+/* md5: 63828925a2a3e18a9ef193cf2d91fd30 */
 /* Rap仓库id: 295591 */
 /* Rapper版本: 1.3.1 */
 /* eslint-disable */
@@ -136,6 +136,8 @@ export interface IModels {
           imageUrl: string
           price: string
           stock: number
+          skuSpec: string
+          skuId: number
         }[]
       }
     }
@@ -147,9 +149,12 @@ export interface IModels {
    */
   'POST/h5/cart/update': {
     Req: {
-      goodsNum: number
-      isSelected: boolean
-      goodsId: number
+      list: {
+        goodsNum: number
+        goodsId: number
+        isSelected: boolean
+        skuId: number
+      }[]
     }
     Res: {
       code: number

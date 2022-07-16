@@ -2,6 +2,8 @@ import router from '@/router'
 import axios from 'axios'
 import { Toast } from 'vant'
 
+const ENVIR = process.env.NODE_ENV === 'development' ? 'DEVELOPMENT' : 'PRODUCTION';
+
 export default async (
     url: string = '',
     params: object,
@@ -14,7 +16,7 @@ export default async (
             user = JSON.parse(user)
         }
         axios({
-            baseURL: 'http://t.wzyyyy.com',
+            baseURL: ENVIR === 'DEVELOPMENT' ? 'http://t.wzyyyy.com': 'http://api.shop.shaoky.com',
             url,
             method,
             params: method === 'get' ? params : {},

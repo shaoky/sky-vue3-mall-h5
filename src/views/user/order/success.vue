@@ -2,7 +2,7 @@
   <div class="header">
     <div class="title">订单支付成功</div>
     <div class="text">
-      <van-button type="default" size="small" @click="$router.replace({name: 'orderInfo', params: {id: +$route.query.id}})">查看订单详情</van-button>
+      <van-button type="default" size="small" @click="$router.replace({name: 'orderInfo', params: {id: Number($route.query.id)}})">查看订单详情</van-button>
       <van-button type="default" size="small" @click="$router.push('/')">返回首页</van-button>
 
     </div>

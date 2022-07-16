@@ -51,6 +51,8 @@ import { Models } from '@/rapper'
 
 
 const route = useRoute()
+
+// @ts-ignore
 let order = ref<Models['GET/h5/order/info']['Res']['data']['info']>({})
 
 let statusDesc = computed(() => {
