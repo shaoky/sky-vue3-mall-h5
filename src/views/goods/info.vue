@@ -39,7 +39,7 @@
       </div>
     </div>
 
-    <goods-bay-pop :goods="goods" ref="goodsBayPopRef" @success="_addCart"></goods-bay-pop>
+    <goods-bay-pop :goods="goods" v-if="goods.id" ref="goodsBayPopRef" @success="_addCart"></goods-bay-pop>
     
   </div>
 </template>
@@ -133,7 +133,7 @@ const _addCart = async(data?: any) => {
     })
     Toast.success('添加成功')
   } else {
-    router.replace({
+    router.push({
       name: 'orderConfirm',
       query: {
         type: 'goods',
@@ -202,10 +202,16 @@ initData()
 }
 
 .attr-list {
+  &:first-child {
+    margin-top: 30px;
+  }
+  &:last-child {
+    margin-bottom: 60px;
+  }
   display: flex;
-  font-size: 28px;
+  font-size: 24px;
   padding: 0 30px;
-  margin-bottom: 10px;
+  margin-bottom: 30px;
   .name {
     width: 300px;
     color: #666;
