@@ -8,13 +8,17 @@
         <img src="/public/icon_selected.png" alt="" v-if="item.isSelected" @click.stop="updateCartIsSelected(item)">
       </div>
       <div class="image">
-        <img :src="item.imageUrl" alt="">
+        <img :src="item.imageUrl">
+        <div class="no-stock-mask" v-if="item.stock === 0">
+          <div class="no-stock">无 货</div>
+        </div>
       </div>
       <div class="goods">
         <div class="title">{{item.title}}</div>
+        <div class="spec">{{item.skuSpec}}</div>
         <div class="price">
           <span>￥{{item.price}}</span>
-          <van-stepper v-model="item.goodsNum" @change="_updateCart(item)" :button-size="20" :max="item.stock" />
+          <van-stepper v-model="item.goodsNum" @change="_updateCart(item)" :button-size="20" :max="item.stock" v-if="item.stock > 0" />
         </div>
       </div>
     </div>
@@ -22,7 +26,6 @@
   <van-submit-bar :price="priceSum" button-text="提交订单" @submit="onSubmit">
     <img src="/public/icon_unselected.png" class="allBtn" @click="onSelectAll" v-if="!isSelectAll" />
     <img src="/public/icon_selected.png" class="allBtn" @click="onSelectAll" v-else />
-    <!-- <van-checkbox v-model="cartAllChecked">全选</van-checkbox> -->
   </van-submit-bar>
   <van-action-sheet v-model:show="show" :actions="actions" @select="onSelect" />
   <web-footer></web-footer>
@@ -37,13 +40,16 @@ import {
   Stepper as VanStepper,
   ActionSheet as VanActionSheet,
   SubmitBar as VanSubmitBar,
-  Checkbox as VanCheckbox
+  Checkbox as VanCheckbox,
+  Toast
 } from 'vant'
 import { deleteCart, getCartList, updateCart } from '@/api/getData'
 import { Models } from '@/rapper/index'
 import router from '@/router';
 
-let cartList = ref<Models['GET/h5/cart/list']['Res']['data']['list']>([])
+type CART = Models['GET/h5/cart/list']['Res']['data']['list']
+
+let cartList = ref<CART>([])
 let flag = ref<boolean>(false)
 let timeValue = ref<number>(0)
 let timer = reactive<any>({})
@@ -51,7 +57,6 @@ let show = ref<boolean>(false)
 let actions = ref([
   { name: '删除' },
 ])
-let cartAllChecked = ref<boolean>(false)
 let activeGoods = ref<number>(0)
 let isSelectAll = ref<boolean>(false) // 是否选中全选
 
@@ -76,14 +81,16 @@ const initData = () => {
 const _getCartList = async() => {
   const res = await getCartList()
   cartList.value = res.list
-  isSelectAll.value = res.list.every(item => item.isSelected)
+  isSelectAll.value = res.list
+    .filter(item => item.stock > 0)
+    .every(item => item.isSelected)
 }
 
 const onClickLeft = () => {
   history.back()
 }
 
-const moveStart = (item: any) => {
+const moveStart = (item) => {
   let timeValue = 0
   timer = setInterval(() => {
     timeValue++
@@ -102,7 +109,7 @@ const moving = () => {
   clearInterval(timer)
 }
 
-const onSelect = async(item: any) => {
+const onSelect = async(item) => {
   if (item.name === '删除') {
     let res = await deleteCart({
       goodsId: activeGoods.value
@@ -114,38 +121,60 @@ const onSelect = async(item: any) => {
 
 
 // 更新是否选中
-const updateCartIsSelected = (item: any) => {
+const updateCartIsSelected = (item) => {
+  if (item.stock == 0) {
+    return
+  }
   item.isSelected = !item.isSelected
-  isSelectAll.value = cartList.value.every((item: any) => item.isSelected)
+  isSelectAll.value = cartList.value.every(item => item.isSelected)
   _updateCart(item)
 }
 
 // 全选按钮
-const onSelectAll = () => {
+const onSelectAll = async() => {
   isSelectAll.value = !isSelectAll.value
-  cartList.value.forEach((item: any) => {
-    item.isSelected = isSelectAll.value
+  cartList.value.forEach(item => {
+    if (item.stock > 0) {
+      item.isSelected = isSelectAll.value
+    }
+  })
+  let res = await updateCart({
+    list: cartList.value.filter(item => item.stock > 0)
+    .map(item => {
+      return {
+        goodsNum: item.goodsNum,
+        isSelected: item.isSelected,
+        goodsId: item.goodsId,
+        skuId: item.skuId
+      }
+    })
   })
 }
 
 
 // 更新购物车
-const _updateCart = async(item: any) => {
-  let res = await updateCart({
-    goodsNum: item.goodsNum,
-    isSelected: item.isSelected,
-    goodsId: item.goodsId
+const _updateCart = async(item) => {
+  await updateCart({
+    list: [{
+      goodsNum: item.goodsNum,
+      isSelected: item.isSelected,
+      goodsId: item.goodsId,
+      skuId: item.skuId
+    }]
   })
 }
 
-
 // 提交订单
 const onSubmit = () => {
+  let data = cartList.value.filter(item => item.isSelected)
+  if (data.length === 0) {
+    Toast.fail('请选择商品')
+    return
+  }
   router.push({
     name: 'orderConfirm',
     query: {
-      type: 'cart',
-      // goods:
+      type: 'cart'
     }
   })
 }
@@ -159,8 +188,6 @@ initData()
 </script>
 <style lang="scss" scoped>
 .cart {
-  // height: 100vh;
-  // background: #f2f2f2;
   padding: 100px 0 220px 0;
 }
 .van-submit-bar {
@@ -186,12 +213,34 @@ initData()
     }
   }
   .image {
+    position: relative;
     width: 180px;
     height: 180px;
     img {
       width: 100%;
       height: 100%;
       display: block;
+    }
+    .no-stock-mask {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(255,255,255,0.5);
+    }
+    .no-stock {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 100px;
+      height: 100px;
+      line-height: 100px;
+      text-align: center;
+      background: rgba(0,0,0,0.5);
+      color: #fff;
+      border-radius: 50%;
+      transform: translate(-50%, -50%);
     }
   }
   .goods {
@@ -211,6 +260,11 @@ initData()
         color: #f2270c;
       }
     }
+    .spec {
+      margin-top: 10px;
+      color: #999;
+    }
   }
+ 
 }
 </style>
