@@ -68,7 +68,7 @@ const onClick = () => {
     Toast.fail('库存不足')
     return 
   }
-  let arr = []
+  let arr: string[] = []
   let skuId
   for(let item of props.goods.spec) {
     arr.push(item.activeName)
@@ -95,7 +95,7 @@ const onClick = () => {
 }
 
 const onSpec = () => {
-  let activeNames = []
+  let activeNames: string[] = []
   for (let item of props.goods.spec) {
     activeNames.push(item.activeName)
   }

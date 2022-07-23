@@ -4,16 +4,18 @@ import { Toast } from 'vant'
 
 const ENVIR = process.env.NODE_ENV === 'development' ? 'DEVELOPMENT' : 'PRODUCTION';
 
+
 export default async (
     url: string = '',
     params: object,
-    method: any = 'get',
+    method: 'get' | 'post' = 'get',
     upload: boolean = false
 ) => {
     return new Promise((resolve, reject) => {
-        let user: any = window.localStorage.getItem('user') || ''
-        if (user) {
-            user = JSON.parse(user)
+        let userData: string = window.localStorage.getItem('user') || ''
+        let user
+        if (userData) {
+            user = JSON.parse(userData)
         }
         axios({
             baseURL: ENVIR === 'DEVELOPMENT' ? 'http://t.wzyyyy.com': 'http://api.shop.shaoky.com',
