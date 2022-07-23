@@ -63,30 +63,41 @@ let searchKeywordList = ref<Keyword[]>([
   {
     id: 7,
     name: '洗面奶',
+  },
+  {
+    id: 8,
+    name: '手机',
   }
 ])
 
+window.addEventListener('popstate', (e) => {
+  if (e.state.source === 'search') {
+    isShow.value = true
+  } else {
+    isShow.value = false
+  }
+})
+
 const clickSearch = () => {
+  history.pushState({
+    source: 'search'
+  }, '', '?search')
   isShow.value = true
-  // @ts-ignore
-  document.querySelector('body').setAttribute('style', 'position: fixed')
+  document.querySelector('body')!.setAttribute('style', 'position: fixed')
 }
 
 const onSearch = () => {
-  // @ts-ignore
-  document.querySelector('body').setAttribute('style', 'position: static')
+  document.querySelector('body')!.setAttribute('style', 'position: static')
   router.push({name: 'search', query: {keyword: searchValue.value}})
 }
 
 const onBack = () => {
-  isShow.value = false
-  // @ts-ignore
-  document.querySelector('body').setAttribute('style', 'position: static')
+  router.go(-1)
+  document.querySelector('body')!.setAttribute('style', 'position: static')
 }
 
 const onHotSearch = (data: Keyword) => {
-  // @ts-ignore
-  document.querySelector('body').setAttribute('style', 'position: static')
+  document.querySelector('body')!.setAttribute('style', 'position: static')
   router.push({
     name: 'search',
     query: {
