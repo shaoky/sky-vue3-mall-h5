@@ -110,6 +110,7 @@ const _getGoodsList = async() => {
 }
 
 .goods {
+  background: #f5f5f5;
   display: flex;
   flex-wrap: wrap;
   margin-top: 20px;
