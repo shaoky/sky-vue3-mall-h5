@@ -1,4 +1,4 @@
-/* md5: 63828925a2a3e18a9ef193cf2d91fd30 */
+/* md5: 6ae237ea8b7e8001fcd06fdc78f4c453 */
 /* Rap仓库id: 295591 */
 /* Rapper版本: 1.3.1 */
 /* eslint-disable */
@@ -531,10 +531,179 @@ export interface IModels {
   }
 
   /**
-   * 接口名：示例接口
-   * Rap 地址: http://rap2.taobao.org/repository/editor?id=295591&mod=503900&itf=2224266
+   * 接口名：商品列表
+   * Rap 地址: http://rap2.taobao.org/repository/editor?id=295591&mod=503900&itf=2307545
    */
-  'GET/example/1648004167250': {
+  'GET/h5/goods/list': {
+    Req: {
+      page?: number
+      size?: number
+      keyword?: string
+    }
+    Res: {
+      code: string
+      data: {
+        list: {
+          id: number
+          imageUrl: string
+          price: string
+          title: string
+        }[]
+        count: number
+      }
+    }
+  }
+
+  /**
+   * 接口名：商品详情
+   * Rap 地址: http://rap2.taobao.org/repository/editor?id=295591&mod=503900&itf=2224267
+   */
+  'GET/h5/goods/info': {
+    Req: {
+      id: number
+    }
+    Res: {
+      code: number
+      data: {
+        info: {
+          id: number
+          imageUrl: string
+          /**
+           * 是否收藏
+           */
+          isCollect: boolean
+          price: string
+          stock: number
+          subtitle: string
+          title: string
+          attr: {
+            name: string
+            value: string
+          }[]
+          sku: {
+            id: number
+            goodsId: number
+            imageUrl: string
+            price: string
+            spec: string
+            stock: number
+          }[]
+          spec: {
+            name: string
+            value: any[]
+          }[]
+        }
+      }
+    }
+  }
+
+  /**
+   * 接口名：新增收藏
+   * Rap 地址: http://rap2.taobao.org/repository/editor?id=295591&mod=503900&itf=2224269
+   */
+  'POST/h5/goods/collect/add': {
+    Req: {
+      /**
+       * 商品id
+       */
+      id: number
+    }
+    Res: {
+      code: number
+      data: boolean
+    }
+  }
+
+  /**
+   * 接口名：删除收藏
+   * Rap 地址: http://rap2.taobao.org/repository/editor?id=295591&mod=503900&itf=2224271
+   */
+  'POST/h5/goods/collect/delete': {
+    Req: {
+      /**
+       * 商品id
+       */
+      id: number
+    }
+    Res: {
+      code: number
+      data: boolean
+    }
+  }
+
+  /**
+   * 接口名：收藏列表
+   * Rap 地址: http://rap2.taobao.org/repository/editor?id=295591&mod=503900&itf=2228675
+   */
+  'GET/h5/goods/collect/list': {
+    Req: {}
+    Res: {
+      code: number
+      data: {
+        list: {
+          title: string
+          price: string
+          difference: string
+        }[]
+      }
+    }
+  }
+
+  /**
+   * 接口名：首页
+   * Rap 地址: http://rap2.taobao.org/repository/editor?id=295591&mod=503900&itf=2307536
+   */
+  'GET/h5/index': {
+    Req: {}
+    Res: {
+      code: number
+      data: {
+        adList: {
+          imageUrl: string
+          id: number
+          title: string
+        }[]
+        iconList: {
+          id: number
+          imageUrl: string
+          title: string
+        }[]
+      }
+    }
+  }
+
+  /**
+   * 接口名：产品分类列表
+   * Rap 地址: http://rap2.taobao.org/repository/editor?id=295591&mod=518381&itf=2307747
+   */
+  'GET/admin/goods/type/list': {
+    Req: {
+      /**
+       * 1是扁平化，2是层级
+       */
+      type: string
+    }
+    Res: {
+      code: number
+      data: {
+        list: {
+          id: number
+          imageUrl: string
+          isOpen: number
+          level: number
+          parentId: number
+          sort: number
+          title: string
+        }[]
+      }
+    }
+  }
+
+  /**
+   * 接口名：示例接口
+   * Rap 地址: http://rap2.taobao.org/repository/editor?id=295591&mod=518383&itf=2307742
+   */
+  'GET/example/1658799749723': {
     Req: {
       /**
        * 请求属性示例
@@ -598,67 +767,6 @@ export interface IModels {
       placeholder: string
     }
   }
-
-  /**
-   * 接口名：商品详情
-   * Rap 地址: http://rap2.taobao.org/repository/editor?id=295591&mod=503900&itf=2224267
-   */
-  'GET/h5/goods/info': {
-    Req: {}
-    Res: {}
-  }
-
-  /**
-   * 接口名：新增收藏
-   * Rap 地址: http://rap2.taobao.org/repository/editor?id=295591&mod=503900&itf=2224269
-   */
-  'POST/h5/goods/collect/add': {
-    Req: {
-      /**
-       * 商品id
-       */
-      id: number
-    }
-    Res: {
-      code: number
-      data: boolean
-    }
-  }
-
-  /**
-   * 接口名：删除收藏
-   * Rap 地址: http://rap2.taobao.org/repository/editor?id=295591&mod=503900&itf=2224271
-   */
-  'POST/h5/goods/collect/delete': {
-    Req: {
-      /**
-       * 商品id
-       */
-      id: number
-    }
-    Res: {
-      code: number
-      data: boolean
-    }
-  }
-
-  /**
-   * 接口名：收藏列表
-   * Rap 地址: http://rap2.taobao.org/repository/editor?id=295591&mod=503900&itf=2228675
-   */
-  'GET/h5/goods/collect/list': {
-    Req: {}
-    Res: {
-      code: number
-      data: {
-        list: {
-          title: string
-          price: string
-          difference: string
-        }[]
-      }
-    }
-  }
 }
 
 type ResSelector<T> = T
@@ -690,11 +798,14 @@ export interface IResponseTypes {
   'POST/h5/order/confirm': ResSelector<IModels['POST/h5/order/confirm']['Res']>
   'GET/h5/user/info': ResSelector<IModels['GET/h5/user/info']['Res']>
   'POST/h5/user/info/update': ResSelector<IModels['POST/h5/user/info/update']['Res']>
-  'GET/example/1648004167250': ResSelector<IModels['GET/example/1648004167250']['Res']>
+  'GET/h5/goods/list': ResSelector<IModels['GET/h5/goods/list']['Res']>
   'GET/h5/goods/info': ResSelector<IModels['GET/h5/goods/info']['Res']>
   'POST/h5/goods/collect/add': ResSelector<IModels['POST/h5/goods/collect/add']['Res']>
   'POST/h5/goods/collect/delete': ResSelector<IModels['POST/h5/goods/collect/delete']['Res']>
   'GET/h5/goods/collect/list': ResSelector<IModels['GET/h5/goods/collect/list']['Res']>
+  'GET/h5/index': ResSelector<IModels['GET/h5/index']['Res']>
+  'GET/admin/goods/type/list': ResSelector<IModels['GET/admin/goods/type/list']['Res']>
+  'GET/example/1658799749723': ResSelector<IModels['GET/example/1658799749723']['Res']>
 }
 
 export function createFetch(fetchConfig: commonLib.RequesterOption, extraConfig?: {fetchType?: commonLib.FetchType}) {
@@ -1098,18 +1209,18 @@ export function createFetch(fetchConfig: commonLib.RequesterOption, extraConfig?
     },
 
     /**
-     * 接口名：示例接口
-     * Rap 地址: http://rap2.taobao.org/repository/editor?id=295591&mod=503900&itf=2224266
+     * 接口名：商品列表
+     * Rap 地址: http://rap2.taobao.org/repository/editor?id=295591&mod=503900&itf=2307545
      * @param req 请求参数
      * @param extra 请求配置项
      */
-    'GET/example/1648004167250': (req?: IModels['GET/example/1648004167250']['Req'], extra?: commonLib.IExtra) => {
+    'GET/h5/goods/list': (req?: IModels['GET/h5/goods/list']['Req'], extra?: commonLib.IExtra) => {
       return rapperFetch({
-        url: '/example/1648004167250',
+        url: '/h5/goods/list',
         method: 'GET',
         params: req,
         extra,
-      }) as Promise<IResponseTypes['GET/example/1648004167250']>
+      }) as Promise<IResponseTypes['GET/h5/goods/list']>
     },
 
     /**
@@ -1173,6 +1284,51 @@ export function createFetch(fetchConfig: commonLib.RequesterOption, extraConfig?
         params: req,
         extra,
       }) as Promise<IResponseTypes['GET/h5/goods/collect/list']>
+    },
+
+    /**
+     * 接口名：首页
+     * Rap 地址: http://rap2.taobao.org/repository/editor?id=295591&mod=503900&itf=2307536
+     * @param req 请求参数
+     * @param extra 请求配置项
+     */
+    'GET/h5/index': (req?: IModels['GET/h5/index']['Req'], extra?: commonLib.IExtra) => {
+      return rapperFetch({
+        url: '/h5/index',
+        method: 'GET',
+        params: req,
+        extra,
+      }) as Promise<IResponseTypes['GET/h5/index']>
+    },
+
+    /**
+     * 接口名：产品分类列表
+     * Rap 地址: http://rap2.taobao.org/repository/editor?id=295591&mod=518381&itf=2307747
+     * @param req 请求参数
+     * @param extra 请求配置项
+     */
+    'GET/admin/goods/type/list': (req?: IModels['GET/admin/goods/type/list']['Req'], extra?: commonLib.IExtra) => {
+      return rapperFetch({
+        url: '/admin/goods/type/list',
+        method: 'GET',
+        params: req,
+        extra,
+      }) as Promise<IResponseTypes['GET/admin/goods/type/list']>
+    },
+
+    /**
+     * 接口名：示例接口
+     * Rap 地址: http://rap2.taobao.org/repository/editor?id=295591&mod=518383&itf=2307742
+     * @param req 请求参数
+     * @param extra 请求配置项
+     */
+    'GET/example/1658799749723': (req?: IModels['GET/example/1658799749723']['Req'], extra?: commonLib.IExtra) => {
+      return rapperFetch({
+        url: '/example/1658799749723',
+        method: 'GET',
+        params: req,
+        extra,
+      }) as Promise<IResponseTypes['GET/example/1658799749723']>
     },
   }
 }
