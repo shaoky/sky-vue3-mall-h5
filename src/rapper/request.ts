@@ -1,4 +1,4 @@
-/* md5: 6ae237ea8b7e8001fcd06fdc78f4c453 */
+/* md5: 81b6a39f405ea4f0811d4a37e79b5f53 */
 /* Rap仓库id: 295591 */
 /* Rapper版本: 1.3.1 */
 /* eslint-disable */
@@ -292,7 +292,16 @@ export interface IModels {
     Res: {
       code: number
       data: {
-        info: {}
+        info: {
+          address: string
+          city: string
+          county: string
+          id: number
+          province: string
+          userName: string
+          userTel: string
+          isDefault: boolean
+        }
       }
     }
   }
@@ -326,7 +335,15 @@ export interface IModels {
     Res: {
       code: number
       data: {
-        goodsList: any[]
+        goodsList: {
+          goodsNum: number
+          id: number
+          imageUrl: string
+          price: string
+          skuId: number
+          skuSpec: string
+          title: string
+        }[]
         totalMoney: string
         payMoney: string
         deliverMoney: string
@@ -352,6 +369,18 @@ export interface IModels {
       data: {
         list: {
           id: number
+          createTime: string
+          status: number
+          statusName: string
+          totalMoney: string
+          goodsList: {
+            id: number
+            imageUrl: string
+            number: number
+            price: string
+            skuSpec: string
+            title: string
+          }[]
         }[]
         count: string
       }
@@ -592,6 +621,9 @@ export interface IModels {
             name: string
             value: any[]
           }[]
+          content: string
+          bannerList: any[]
+          saleCount: number
         }
       }
     }
@@ -644,6 +676,9 @@ export interface IModels {
           title: string
           price: string
           difference: string
+          imageUrl: string
+          goodsId: string
+          adjustPrice: string
         }[]
       }
     }
@@ -694,6 +729,7 @@ export interface IModels {
           parentId: number
           sort: number
           title: string
+          children: any[]
         }[]
       }
     }

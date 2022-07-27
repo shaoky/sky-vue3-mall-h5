@@ -23,17 +23,17 @@ import { ref } from 'vue'
 import { NavBar as VanNavBar, AddressEdit as VanAddressEdit } from 'vant'
 // @ts-ignore
 import type { AddressEditInfo } from 'vant'
-import { getRegion, addAddress, updateAddress, getAddressInfo, deleteAddress } from '@/api/getData'
+import { getRegion, addAddress, getAddressInfo, deleteAddress } from '@/api/getData'
 import { useRoute } from 'vue-router'
 // import { areaList } from '@vant/area-data'
 
 const route = useRoute()
 
 let id = +route.params.id
-let searchResult = ref<any>([])
+let searchResult = ref([])
 // @ts-ignore
 let addressInfo = ref<AddressEditInfo>()
-let areaList: any = {
+let areaList = {
   province_list: {
     110000: '北京市',
     120000: '天津市',
@@ -66,9 +66,9 @@ const initData = async() => {
 
 const _getRegion = async() => {
   const res = await getRegion()
-  let province_list: any = res.list.filter((item: any) => item.code.indexOf('0000') > 0)
-  let city_list: any = res.list.filter((item: any) => item.code.indexOf('00') > 0 && item.code.indexOf('0000') === -1)
-  let county_list: any = res.list.filter((item: any) => item.code.indexOf('00') === -1)
+  let province_list = res.list.filter(item => item.code.indexOf('0000') > 0)
+  let city_list = res.list.filter(item => item.code.indexOf('00') > 0 && item.code.indexOf('0000') === -1)
+  let county_list = res.list.filter(item => item.code.indexOf('00') === -1)
   for(let item of province_list) {
     areaList.province_list[item.code] = item.name
   }
@@ -96,7 +96,7 @@ const _getAddressInfo = async() => {
   }
 }
 
-const onSave = async(data: any) => {
+const onSave = async(data) => {
   let form: any = {
     userName: data.name,
     userTel: data.tel,
@@ -112,13 +112,13 @@ const onSave = async(data: any) => {
     form.id = id
   }
   const res = await addAddress(form)
-  if (res.data) {
+  if (res) {
     onClickLeft()
   }
 }
 
 const onDelete = async() => {
-  const res = await deleteAddress({id})
+  await deleteAddress({id})
   onClickLeft()
 }
 

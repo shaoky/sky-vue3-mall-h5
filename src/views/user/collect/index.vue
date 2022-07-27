@@ -21,10 +21,13 @@ import { ref } from 'vue'
 import { getGoodsCollect } from '@/api/getData'
 import { useRouter } from 'vue-router'
 import { NavBar as VanNavBar } from 'vant'
+import { Models } from '@/rapper'
+
+type GoodsCollectModel = Models['GET/h5/goods/collect/list']['Res']['data']['list']
 
 const router = useRouter()
 
-let goods = ref<any>([])
+let goods = ref<GoodsCollectModel>([])
 
 const initData = () => {
   getData()
@@ -35,7 +38,7 @@ const getData = async() => {
   goods.value = res.list
 }
 
-const goGoodsInfo = (item: any) => {
+const goGoodsInfo = (item: GoodsCollectModel[0]) => {
   router.push({
     name: 'goodsInfo',
     params: {

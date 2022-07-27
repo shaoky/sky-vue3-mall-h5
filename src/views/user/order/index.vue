@@ -52,6 +52,8 @@ import { getOrderList, deleteOrder, cancelOrder } from '@/api/getData'
 import Goods from './components/goods.vue'
 import _ from 'lodash'
 import { useRoute } from 'vue-router'
+import { Models } from '@/rapper'
+type orderModel = Models['GET/h5/order/list']['Res']['data']['list']
 
 const route = useRoute()
 let page = ref<number>(1)
@@ -59,7 +61,7 @@ let size = ref<number>(10)
 let status = ref<number>(0)
 let loading = ref<boolean>(false)
 let finished = ref<boolean>(false)
-let orderList = ref<any>([])
+let orderList = ref<orderModel>([])
 let active = ref()
 
 const initData = () => {
@@ -84,7 +86,7 @@ const _getOrderList = async() => {
   }
 }
 
-const onClickTab = (data: any) => {
+const onClickTab = (data) => {
   orderList.value = []
   page.value = 1
   finished.value = false
@@ -93,7 +95,7 @@ const onClickTab = (data: any) => {
   _getOrderList()
 }
 
-const _cancelOrder = async(order: any) => {
+const _cancelOrder = async(order) => {
   await cancelOrder({id: order.id})
   order.status = 5
   order.statusName = '已取消'

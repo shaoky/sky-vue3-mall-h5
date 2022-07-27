@@ -1,6 +1,6 @@
 <template class="main">
   <van-nav-bar title="确定订单" fixed left-arrow @click-left="onClickLeft" />
-  <div class="address" @click="goAddress">
+  <div class="address" @click="goAddress" v-if="address">
     <div class="left">
       <div class="name">{{address.userName}} {{address.userTel}}</div>
       <div class="content">{{address.province}}{{address.city}}{{address.county}}{{address.address}}</div>
@@ -65,7 +65,7 @@
 </template>
 <script setup lang="ts">
 // @ts-ignore
-import { ref, computed } from 'vue'
+import { ref } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { 
   NavBar as VanNavBar,
@@ -74,11 +74,17 @@ import {
   SubmitBar as VanSubmitBar
 } from 'vant'
 import { getAddressDefault, getOrderGoodsPreview, getOrderPreview, createOrder } from '@/api/getData'
+import { Models } from '@/rapper'
+
+type addressModel= Models['GET/h5/user/address/default']['Res']['data']['info']
+type goodsModel= Models['GET/h5/order/preview']['Res']['data']['goodsList']
+
 const route = useRoute()
 const router = useRouter()
 
-let address = ref<any>({})
-let goodsList = ref<any>([])
+
+let address = ref<addressModel>()
+let goodsList = ref<goodsModel>([])
 let deliverMoney = ref<string>()
 let totalMoney = ref<string>()
 let payMoney = ref<string>('0')
@@ -121,9 +127,9 @@ const goAddress = () => {
 
 const onSubmit = async() => {
   const res = await createOrder({
-    addressId: address.value.id,
+    addressId: address.value!.id,
     remark: remark.value,
-    goodsList: goodsList.value.map((item: any) => ({
+    goodsList: goodsList.value.map(item => ({
       goodsId: item.id,
       goodsNum: item.goodsNum,
       skuId: item.skuId

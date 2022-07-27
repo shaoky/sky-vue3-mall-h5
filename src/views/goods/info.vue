@@ -58,29 +58,9 @@ import {
   Icon as VanIcon,
   Toast
 } from 'vant'
+import { Models } from '@/rapper'
 
-export interface GoodsInfoModel {
-  id: number
-  title: string
-  price: string
-  content: string
-  bannerList: string[]
-  imageUrl: string
-  saleCount: number
-  isCollect: boolean
-  spec: Spec[]
-  attr: Attr[]
-}
-
-export interface Spec {
-  name: string
-  value: string[]
-}
-
-export interface Attr {
-  name: string
-  value: string
-}
+type GoodsInfoModel = Models['GET/h5/goods/info']['Res']['data']['info']
 
 const route = useRoute()
 const router = useRouter()
@@ -90,12 +70,15 @@ let goods = ref<GoodsInfoModel>({
   title: '',
   price: '',
   content: '',
+  subtitle: '',
+  stock: 0,
   bannerList: [],
   imageUrl: '',
   saleCount: 0,
   isCollect: false,
   spec: [],
-  attr: []
+  attr: [],
+  sku: []
 })
 let tabValue = ref()
 let goodsBayPopRef = ref()
@@ -106,12 +89,13 @@ const initData = () => {
 }
 
 const _getGoodsInfo = async() => {
-  const res: any = await getGoodsInfo({
+  const res = await getGoodsInfo({
     id: route.params.id
   })
   goods.value = res.info
   if (goods.value.spec) {
-    goods.value.spec.forEach((item: any) => {
+    goods.value.spec.forEach(item => {
+      // @ts-ignore
       item.activeName = item.value[0]
     })
   }

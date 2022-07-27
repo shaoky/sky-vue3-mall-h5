@@ -23,16 +23,19 @@ import { useRoute } from 'vue-router'
 import { List as VanList } from 'vant'
 import { getGoodsList } from '@/api/getData'
 // @ts-ignore
-import Goods, { GoodsModel } from '@/components/goods.vue'
+import Goods from '@/components/goods.vue'
 // @ts-ignore
 import Search from './components/search-input.vue'
 // @ts-ignore
 import Screen from './components/search-screen.vue'
 import { Direction } from './components/search-screen.vue'
+import { Models } from '@/rapper'
+
+type GoodsListModel = Models['GET/h5/goods/list']['Res']['data']['list']
 
 let route = useRoute()
 
-let goodsList = ref<GoodsModel[]>([])
+let goodsList = ref<GoodsListModel>([])
 let loading = ref<boolean>(false)
 let finished = ref<boolean>(false)
 let page = ref<number>(1)
@@ -47,7 +50,7 @@ const initData = () => {
 
 const _getGoodsList = async() => {
   loading.value = true
-  const res: any = await getGoodsList({
+  const res = await getGoodsList({
     page: page.value,
     size: size.value,
     keyword: keyword.value

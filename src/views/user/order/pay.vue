@@ -20,8 +20,8 @@ import { getOrderInfo, payOrder } from '@/api/getData'
 
 const route = useRoute()
 const router = useRouter()
-let totalMoney = ref<any>()
-let time = reactive<any>({
+let totalMoney = ref()
+let time = reactive({
   minute: '',
   second: ''
 })

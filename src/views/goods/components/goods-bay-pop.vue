@@ -38,10 +38,21 @@
 // @ts-ignore
 import { ref, defineProps, defineExpose, defineEmits } from 'vue'
 import { Popup as VanPopup, Stepper as VanStepper, Toast, ImagePreview } from 'vant'
+import { Models } from '@/rapper'
 
-const props = defineProps({
-  goods: <any>{},
-})
+type GoodsInfo = Models['GET/h5/goods/info']['Res']['data']['info']
+type GoodsInfoModel = GoodsInfo & {
+  spec: {
+    name: string,
+    value: any[],
+    activeName?: string
+  }[]
+}
+
+const props = defineProps<{
+  goods: GoodsInfoModel,
+}>()
+
 let show = ref(false)
 let data = ref({
   goodsNum: 1
@@ -71,6 +82,7 @@ const onClick = () => {
   let arr: string[] = []
   let skuId
   for(let item of props.goods.spec) {
+    // @ts-ignore
     arr.push(item.activeName)
   }
   for (let item of props.goods.sku) {
@@ -97,6 +109,7 @@ const onClick = () => {
 const onSpec = () => {
   let activeNames: string[] = []
   for (let item of props.goods.spec) {
+    // @ts-ignore
     activeNames.push(item.activeName)
   }
   for (let item of props.goods.sku) {

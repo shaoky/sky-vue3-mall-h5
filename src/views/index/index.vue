@@ -42,18 +42,21 @@ import { Swipe as vanSwipe, SwipeItem as vanSwipeItem, List as VanList } from 'v
 import { getIndexData, getGoodsList } from '@/api/getData'
 // @ts-ignore
 import Goods from '@/components/goods.vue'
-import { adModel } from './interface'
+// import { adModel } from './interface'
 // @ts-ignore
 import WebFooter from '@/components/web-footer.vue'
 // @ts-ignore
 import Search from './components/search.vue'
+import { Models } from '@/rapper'
 
-const count = ref(0)
-let adList = ref<Array<adModel>>([])
-let iconList = ref<Array<adModel>>([])
+type GoodsListModel = Models['GET/h5/goods/list']['Res']['data']['list']
+type adModel = Models['GET/h5/index']['Res']['data']['adList']
+
+let adList = ref<adModel>([])
+let iconList = ref<adModel>([])
 let loading = ref<boolean>(false)
 let finished = ref<boolean>(false)
-let goodsList = ref<any>([])
+let goodsList = ref<GoodsListModel>([])
 let size = ref(20)
 let page = ref(1)
 
@@ -63,13 +66,13 @@ onMounted(() => {
 })
 
 const getData = async() => {
-  const res: any = await getIndexData({})
+  const res = await getIndexData()
   adList.value = res.adList
   iconList.value = res.iconList
 }
 
 const _getGoodsList = async() => {
-  const res: any = await getGoodsList({
+  const res = await getGoodsList({
     page: page.value,
     size: size.value
   })

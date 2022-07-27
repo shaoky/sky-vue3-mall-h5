@@ -21,8 +21,8 @@ import { useRouter } from 'vue-router'
 export interface GoodsModel {
   id: number;
   title: string;
-  imageUrl?: string;
-  price: number;
+  imageUrl: string;
+  price: string;
   number: number;
   skuSpec?: string;
 }
@@ -32,14 +32,7 @@ let router = useRouter()
 let props = withDefaults(defineProps<{
   goods: GoodsModel,
   orderId?: number
-}>(), {
-  goods: () => ({
-    id: 0,
-    title: '',
-    price: 0,
-    number: 0,
-  })
-})
+}>(), {})
 
 </script>
 <style lang="scss" scoped>

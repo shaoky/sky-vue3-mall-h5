@@ -91,7 +91,7 @@ const initData = () => {
 }
 
 // 搜索获取焦点
-const onFocus = (value: any) => {
+const onFocus = (value) => {
   isSearchBtn.value = true
   searchHeight.value = '100%'
 }

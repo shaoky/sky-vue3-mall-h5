@@ -28,25 +28,21 @@ import { useRouter } from 'vue-router'
 import WebFooter from '@/components/web-footer.vue'
 import { Sidebar as VanSidebar, SidebarItem as VanSidebarItem } from 'vant'
 import { getCategoryList } from '@/api/getData'
+import { Models } from '@/rapper'
 
-interface CategoryModel {
-  id: number
-  title: string
-  imageUrl: string
-  children: CategoryModel[]
-}
+type CategoryModel = Models['GET/admin/goods/type/list']['Res']['data']['list']
 
 const router = useRouter()
 const active = ref()
-let categoryList = ref<CategoryModel[]>([])
-let categoryChilrenList = ref<CategoryModel[]>([])
+let categoryList = ref<CategoryModel>([])
+let categoryChilrenList = ref<CategoryModel>([])
 
 const initData = () => {
   _getCategoryList()
 }
 
 const _getCategoryList = async() => {
-  const res: any = await getCategoryList({
+  const res = await getCategoryList({
     type: 2,
     isOpen: 1
   })
@@ -60,7 +56,7 @@ const onChange = (index: number) => {
 }
 
 // 搜索
-const onSearch = (data: CategoryModel) => {
+const onSearch = (data: CategoryModel[0]) => {
   router.push({name: 'search', query: {keyword: data.title}})
 }
 

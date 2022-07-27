@@ -86,7 +86,7 @@ import WebFooter from '@/components/web-footer.vue'
 import { Icon as VanIcon } from 'vant'
 import { getUserInfo } from '@/api/getData'
 
-let user = ref<any>({
+let user = ref({
   photo: '',
   name: ''
 })
