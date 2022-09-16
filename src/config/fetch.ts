@@ -27,14 +27,14 @@ export default async function<T extends keyof IModels> (
             method = 'post'
         }
         axios({
-            baseURL: ENVIR === 'DEVELOPMENT' ? 'http://t.wzyyyy.com': 'http://api.shop.shaoky.com',
+            baseURL: ENVIR === 'DEVELOPMENT' ? 'http://api.sky.com': 'http://api.shop.shaoky.com',
             url: urlRep,
             method,
             params: method === 'get' ? params : {},
             data: method === 'post' ? params : {},
             responseType: 'json',
             headers: {
-                Authorization: user.token || '',
+                Authorization: user?.token || '',
                 'content-type': upload ? 'multipart/form-data': 'application/json'
             }
         }).then(res => {

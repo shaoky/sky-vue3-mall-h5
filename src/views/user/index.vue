@@ -79,9 +79,7 @@
   <web-footer></web-footer>
 </template>
 <script setup lang="ts">
-// @ts-ignore
 import { ref } from 'vue'
-// @ts-ignore
 import WebFooter from '@/components/web-footer.vue'
 import { Icon as VanIcon } from 'vant'
 import { getUserInfo } from '@/api/getData'
@@ -101,7 +99,6 @@ const _getUserInfo = async() => {
 }
 
 initData()
-
 </script>
 <style lang="scss" scoped>
 .header {

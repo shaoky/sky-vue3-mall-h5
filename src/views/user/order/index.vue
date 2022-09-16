@@ -44,16 +44,21 @@
 
 </template>
 <script setup lang="ts">
-// @ts-ignore
-import { ref, reactive } from 'vue'
-import { Tabs as VanTabs, Tab as VanTab, Icon as VanIcon, Button as VanButton, List as VanList, Toast } from 'vant'
+import { ref } from 'vue'
+import {
+  Tabs as VanTabs,
+  Tab as VanTab,
+  Icon as VanIcon,
+  Button as VanButton,
+  List as VanList,
+  Toast
+} from 'vant'
 import { getOrderList, deleteOrder, cancelOrder } from '@/api/getData'
-// @ts-ignore
 import Goods from './components/goods.vue'
-import _ from 'lodash'
+import pullAllBy from 'lodash/pullAllBy'
 import { useRoute } from 'vue-router'
 import { Models } from '@/rapper'
-type orderModel = Models['GET/h5/order/list']['Res']['data']['list']
+type orderModel = Models['GET/h5/order/list']['Res']['data']['list'][0]
 
 const route = useRoute()
 let page = ref<number>(1)
@@ -61,7 +66,7 @@ let size = ref<number>(10)
 let status = ref<number>(0)
 let loading = ref<boolean>(false)
 let finished = ref<boolean>(false)
-let orderList = ref<orderModel>([])
+let orderList = ref<orderModel[]>([])
 let active = ref()
 
 const initData = () => {
@@ -95,7 +100,7 @@ const onClickTab = (data) => {
   _getOrderList()
 }
 
-const _cancelOrder = async(order) => {
+const _cancelOrder = async(order: orderModel) => {
   await cancelOrder({id: order.id})
   order.status = 5
   order.statusName = '已取消'
@@ -103,7 +108,7 @@ const _cancelOrder = async(order) => {
 
 const _deleteOrder = async(id: number) => {
   await deleteOrder({id})
-  _.pullAllBy(orderList.value, [{id}], 'id')
+  pullAllBy(orderList.value, [{id}], 'id')
   Toast.success('删除成功')
   
 }

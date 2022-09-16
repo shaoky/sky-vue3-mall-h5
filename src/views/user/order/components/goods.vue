@@ -14,9 +14,7 @@
   </div>
 </template>
 <script setup lang="ts">
-// @ts-ignore
 import { withDefaults, defineProps } from 'vue'
-import { useRouter } from 'vue-router'
 
 export interface GoodsModel {
   id: number;
@@ -27,9 +25,7 @@ export interface GoodsModel {
   skuSpec?: string;
 }
 
-let router = useRouter()
-
-let props = withDefaults(defineProps<{
+withDefaults(defineProps<{
   goods: GoodsModel,
   orderId?: number
 }>(), {})

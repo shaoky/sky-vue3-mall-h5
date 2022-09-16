@@ -12,7 +12,6 @@
   </div>
 </template>
 <script setup lang="ts">
-// @ts-ignore
 import { ref } from 'vue'
 import { NavBar as VanNavBar } from 'vant'
 import { getAddressList } from '@/api/getData'

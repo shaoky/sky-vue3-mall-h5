@@ -8,15 +8,14 @@
       <div class="goods-info">
         <div class="goods-title van-multi-ellipsis--l2">{{item.title}}</div>
         <div class="goods-cell">
-          <div class="price">￥{{item.collectPrice}}</div>
-          <div class="adjust" v-if="item.adjustPrice !== 0 ">比收藏时{{item.adjustPrice > 0 ? '降价' : '提高' }}{{item.adjustPrice}}元</div>
+          <div class="price">￥{{item.price}}</div>
+          <div class="adjust" v-if="Number(item.adjustPrice) !== 0 ">比收藏时{{Number(item.adjustPrice) > 0 ? '降价' : '提高' }}{{item.adjustPrice}}元</div>
         </div>
       </div>
     </div>
   </div>
 </template>
 <script setup lang="ts">
-// @ts-ignore
 import { ref } from 'vue'
 import { getGoodsCollect } from '@/api/getData'
 import { useRouter } from 'vue-router'

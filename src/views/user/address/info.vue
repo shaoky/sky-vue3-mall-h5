@@ -18,10 +18,8 @@
   </div>
 </template>
 <script setup lang="ts">
-// @ts-ignore
 import { ref } from 'vue'
 import { NavBar as VanNavBar, AddressEdit as VanAddressEdit } from 'vant'
-// @ts-ignore
 import type { AddressEditInfo } from 'vant'
 import { getRegion, addAddress, getAddressInfo, deleteAddress } from '@/api/getData'
 import { useRoute } from 'vue-router'
@@ -31,7 +29,6 @@ const route = useRoute()
 
 let id = +route.params.id
 let searchResult = ref([])
-// @ts-ignore
 let addressInfo = ref<AddressEditInfo>()
 let areaList = {
   province_list: {

@@ -26,7 +26,7 @@
   >
     <goods 
       v-for="item in goodsList"
-      :key="item"
+      :key="item.id"
       :goods="item">
     </goods>
     <!-- <van-cell v-for="item in state.list" :key="item" :title="item" /> -->
@@ -36,16 +36,11 @@
 </template>
 
 <script setup lang="ts">
-// @ts-ignore
 import { ref, onMounted } from 'vue'
 import { Swipe as vanSwipe, SwipeItem as vanSwipeItem, List as VanList } from 'vant'
 import { getIndexData, getGoodsList } from '@/api/getData'
-// @ts-ignore
 import Goods from '@/components/goods.vue'
-// import { adModel } from './interface'
-// @ts-ignore
 import WebFooter from '@/components/web-footer.vue'
-// @ts-ignore
 import Search from './components/search.vue'
 import { Models } from '@/rapper'
 

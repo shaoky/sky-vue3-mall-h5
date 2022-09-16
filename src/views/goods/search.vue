@@ -16,17 +16,12 @@
   </van-list>
 </template>
 <script setup lang="ts">
-// @ts-ignore
 import { ref, onActivated } from 'vue'
 import { useRoute } from 'vue-router'
-// @ts-ignore
 import { List as VanList } from 'vant'
 import { getGoodsList } from '@/api/getData'
-// @ts-ignore
 import Goods from '@/components/goods.vue'
-// @ts-ignore
 import Search from './components/search-input.vue'
-// @ts-ignore
 import Screen from './components/search-screen.vue'
 import { Direction } from './components/search-screen.vue'
 import { Models } from '@/rapper'
@@ -45,7 +40,6 @@ let keyword = ref<string>('')
 const initData = () => {
   goodsList.value = []
   keyword.value = route.query.keyword as string
-  // _getGoodsList()
 }
 
 const _getGoodsList = async() => {

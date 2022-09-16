@@ -11,15 +11,14 @@
 </template>
 
 <script setup lang="ts">
-// @ts-ignore
-import { withDefaults, defineProps, ref } from 'vue'
+import { withDefaults, defineProps } from 'vue'
 import { useRouter } from 'vue-router'
 
 export interface GoodsModel {
   id: number;
   title: string;
   imageUrl?: string;
-  price: number;
+  price: string;
 }
 
 const router = useRouter()
@@ -30,7 +29,7 @@ let props = withDefaults(defineProps<{
   goods: () => ({
     id: 0,
     title: '',
-    price: 0
+    price: ''
   })
 })
 

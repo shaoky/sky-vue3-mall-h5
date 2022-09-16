@@ -41,19 +41,17 @@
   <div class="btn-tel" v-if="order.status === 3" @click="onConfirm">确认收货</div>
 </template>
 <script setup lang="ts">
-// @ts-ignore
-import { ref, reactive, computed } from 'vue'
+import { ref, computed } from 'vue'
 import { getOrderInfo, confirmOrder } from '@/api/getData'
 import { useRoute } from 'vue-router'
-// @ts-ignore
 import Goods from './components/goods.vue'
 import { Models } from '@/rapper'
-
+type OrderModel = Models['GET/h5/order/info']['Res']['data']['info']
 
 const route = useRoute()
 
 // @ts-ignore
-let order = ref<Models['GET/h5/order/info']['Res']['data']['info']>({})
+let order = ref<OrderModel>({})
 
 let statusDesc = computed(() => {
   if (order.value.status === 1) {

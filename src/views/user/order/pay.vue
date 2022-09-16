@@ -13,7 +13,6 @@
   <div class="btn" @click="onPay">去支付</div>
 </template>
 <script setup lang="ts">
-// @ts-ignore
 import { ref, reactive } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { getOrderInfo, payOrder } from '@/api/getData'

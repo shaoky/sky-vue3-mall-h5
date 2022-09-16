@@ -21,10 +21,8 @@
   <web-footer></web-footer>
 </template>
 <script setup lang="ts">
-// @ts-ignore
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
-// @ts-ignore
 import WebFooter from '@/components/web-footer.vue'
 import { Sidebar as VanSidebar, SidebarItem as VanSidebarItem } from 'vant'
 import { getCategoryList } from '@/api/getData'

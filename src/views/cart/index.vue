@@ -31,16 +31,13 @@
   <web-footer></web-footer>
 </template>
 <script setup lang="ts">
-// @ts-ignore
 import { ref, reactive, computed } from 'vue'
-// @ts-ignore
 import WebFooter from '@/components/web-footer.vue'
 import { 
   NavBar as VanNavBar,
   Stepper as VanStepper,
   ActionSheet as VanActionSheet,
   SubmitBar as VanSubmitBar,
-  Checkbox as VanCheckbox,
   Toast
 } from 'vant'
 import { deleteCart, getCartList, updateCart } from '@/api/getData'
@@ -138,7 +135,7 @@ const onSelectAll = async() => {
       item.isSelected = isSelectAll.value
     }
   })
-  let res = await updateCart({
+  await updateCart({
     list: cartList.value.filter(item => item.stock > 0)
     .map(item => {
       return {

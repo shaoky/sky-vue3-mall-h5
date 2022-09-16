@@ -44,11 +44,9 @@
   </div>
 </template>
 <script setup lang="ts">
-// @ts-ignore
-import { ref, defineExpose } from 'vue'
+import { ref } from 'vue'
 import { getGoodsInfo, addCart, addGoodsCollect, deleteGoodsCollect } from '@/api/getData'
 import { useRoute, useRouter } from 'vue-router'
-// @ts-ignore
 import GoodsBayPop from './components/goods-bay-pop.vue'
 import { 
   Swipe as VanSwipe,

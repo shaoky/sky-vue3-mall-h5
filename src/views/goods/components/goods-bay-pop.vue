@@ -35,7 +35,6 @@
   </van-popup>
 </template>
 <script setup lang="ts">
-// @ts-ignore
 import { ref, defineProps, defineExpose, defineEmits } from 'vue'
 import { Popup as VanPopup, Stepper as VanStepper, Toast, ImagePreview } from 'vant'
 import { Models } from '@/rapper'
@@ -82,8 +81,7 @@ const onClick = () => {
   let arr: string[] = []
   let skuId
   for(let item of props.goods.spec) {
-    // @ts-ignore
-    arr.push(item.activeName)
+    arr.push(item.activeName!)
   }
   for (let item of props.goods.sku) {
     if (item.spec === arr.join()) {
@@ -109,8 +107,7 @@ const onClick = () => {
 const onSpec = () => {
   let activeNames: string[] = []
   for (let item of props.goods.spec) {
-    // @ts-ignore
-    activeNames.push(item.activeName)
+    activeNames.push(item.activeName!)
   }
   for (let item of props.goods.sku) {
     if (item.spec === activeNames.toString()) {

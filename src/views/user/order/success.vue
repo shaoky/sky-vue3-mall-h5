@@ -4,20 +4,11 @@
     <div class="text">
       <van-button type="default" size="small" @click="$router.replace({name: 'orderInfo', params: {id: Number($route.query.id)}})">查看订单详情</van-button>
       <van-button type="default" size="small" @click="$router.push('/')">返回首页</van-button>
-
     </div>
   </div>
-
 </template>
 <script setup lang="ts">
-// @ts-ignore
 import { Button as VanButton } from 'vant'
-
-
-const initData = () => {
-}
-
-initData()
 </script>
 <style lang="scss" scoped>
 .header{

@@ -22,16 +22,12 @@
   <div class="out-login" @click="outLogin">退出登录</div>
 </template>
 <script setup lang="ts">
-// @ts-ignore
 import { ref } from 'vue'
 import { getUserInfo, uploadImage, updateUserInfo } from '@/api/getData'
 import { Uploader as VanUploader, Toast, Icon as VanIcon } from 'vant'
 import router from '@/router';
 
-
-let show = ref<boolean>(false)
 let user = ref<any>({})
-
 
 const initData = async() => {
   let res = await getUserInfo()

@@ -18,7 +18,6 @@
   </div>
 </template>
 <script setup lang="ts">
-// @ts-ignore
 import { ref, defineEmits, onActivated } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { Field as VanField, Icon as VanIcon } from 'vant'
@@ -91,7 +90,7 @@ const initData = () => {
 }
 
 // 搜索获取焦点
-const onFocus = (value) => {
+const onFocus = () => {
   isSearchBtn.value = true
   searchHeight.value = '100%'
 }

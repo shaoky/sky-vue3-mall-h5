@@ -12,7 +12,6 @@
   </div>
 </template>
 <script setup lang="ts">
-// @ts-ignore
 import { ref, defineEmits } from 'vue'
 
 export type Direction = '' | 'up' | 'down'

@@ -19,10 +19,10 @@
     </van-field>
 
     <div class="submit" @click="onLogin">登录</div>
+    <div class="tip">提示：手机号可随意输入</div>
   </div>
 </template>
 <script setup lang="ts">
-// @ts-ignore
 import { ref } from 'vue'
 import { useRouter, useRoute } from 'vue-router';
 import { NavBar as VanNavBar, Field as VanField, Toast } from 'vant'
@@ -121,5 +121,10 @@ const onLogin = async() => {
   color: #fff;
   font-size: 28px;
   background: linear-gradient(to right,rgb(254,84,71),rgb(243,52,74) 100%);
+}
+.tip {
+  margin: 20px 0 0 50px;
+  font-size: 28px;
+  color: #666;
 }
 </style>
