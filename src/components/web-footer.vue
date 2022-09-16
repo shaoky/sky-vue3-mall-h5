@@ -1,17 +1,14 @@
 <template>
-  <tabbar v-model="active" active-color="#ff2828" inactive-color="#000" @change="change">
-    <tabbar-item name="index" icon="home-o">首页</tabbar-item>
-    <tabbar-item name="category" icon="apps-o">分类</tabbar-item>
-    <tabbar-item name="cart" icon="cart-o">购物车</tabbar-item>
-    <tabbar-item name="user" icon="user-o">我的</tabbar-item>
-  </tabbar>
+  <van-tabbar v-model="active" active-color="#ff2828" inactive-color="#000" @change="change">
+    <van-tabbar-item name="index" icon="home-o">首页</van-tabbar-item>
+    <van-tabbar-item name="category" icon="apps-o">分类</van-tabbar-item>
+    <van-tabbar-item name="cart" icon="cart-o">购物车</van-tabbar-item>
+    <van-tabbar-item name="user" icon="user-o">我的</van-tabbar-item>
+  </van-tabbar>
 </template>
 
 <script setup lang="ts">
-// @ts-ignore
 import { onActivated } from 'vue'
-import { Tabbar, TabbarItem } from 'vant'
-// @ts-ignore
 import { ref } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 
@@ -51,6 +48,6 @@ initData()
 
 <style lang="scss">
 .van-tabbar--fixed {
-  position: fixed!important;;
+  position: fixed!important;
 }
 </style>

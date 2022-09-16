@@ -13,7 +13,6 @@
 </template>
 <script setup lang="ts">
 import { ref } from 'vue'
-import { NavBar as VanNavBar } from 'vant'
 import { getAddressList } from '@/api/getData'
 import { Models } from '@/rapper/index'
 

@@ -19,7 +19,6 @@
 import { ref } from 'vue'
 import { getGoodsCollect } from '@/api/getData'
 import { useRouter } from 'vue-router'
-import { NavBar as VanNavBar } from 'vant'
 import { Models } from '@/rapper'
 
 type GoodsCollectModel = Models['GET/h5/goods/collect/list']['Res']['data']['list']

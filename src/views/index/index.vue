@@ -1,7 +1,7 @@
 <template>
 
   <search class="search"></search>
-
+  
   <div class="banner">
     <van-swipe class="my-swipe" :autoplay="3000" indicator-color="white">
       <van-swipe-item v-for="item in adList">
@@ -37,7 +37,6 @@
 
 <script setup lang="ts">
 import { ref, onMounted } from 'vue'
-import { Swipe as vanSwipe, SwipeItem as vanSwipeItem, List as VanList } from 'vant'
 import { getIndexData, getGoodsList } from '@/api/getData'
 import Goods from '@/components/goods.vue'
 import WebFooter from '@/components/web-footer.vue'

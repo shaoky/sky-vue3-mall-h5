@@ -20,7 +20,6 @@
 <script setup lang="ts">
 import { ref, defineEmits, onActivated } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
-import { Field as VanField, Icon as VanIcon } from 'vant'
 
 interface Keyword {
   keyword: string;

@@ -24,8 +24,7 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import { getUserInfo, uploadImage, updateUserInfo } from '@/api/getData'
-import { Uploader as VanUploader, Toast, Icon as VanIcon } from 'vant'
-import router from '@/router';
+import router from '@/router'
 
 let user = ref<any>({})
 

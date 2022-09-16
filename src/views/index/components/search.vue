@@ -1,15 +1,15 @@
 <template>
   <div class="search" @click="clickSearch" v-if="!isShow">
-    <Icon name="search"></Icon>
+    <van-icon name="search"></van-icon>
     <div class="text">搜索</div>
   </div>
   <div class="search-popup" v-if="isShow">
   
     <div class="header">
-      <Icon name="arrow-left" @click="onBack"></Icon>
+      <van-icon name="arrow-left" @click="onBack"></van-icon>
       <div class="box">
-        <Icon name="search"></Icon>
-        <field v-model="searchValue" placeholder="请输入关键词" autofocus />
+        <van-icon name="search"></van-icon>
+        <van-field v-model="searchValue" placeholder="请输入关键词" autofocus />
       </div>
       <div class="btn" @click="onSearch">搜索</div>
     </div>
@@ -24,7 +24,6 @@
 // @ts-ignore
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
-import { Icon, Field } from 'vant'
 
 interface Keyword {
   id: number;

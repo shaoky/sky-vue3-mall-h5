@@ -66,12 +66,6 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
-import { 
-  NavBar as VanNavBar,
-  Icon as VanIcon,
-  Field as VanField,
-  SubmitBar as VanSubmitBar
-} from 'vant'
 import { getAddressDefault, getOrderGoodsPreview, getOrderPreview, createOrder } from '@/api/getData'
 import { Models } from '@/rapper'
 

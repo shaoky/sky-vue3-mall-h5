@@ -19,7 +19,6 @@
 </template>
 <script setup lang="ts">
 import { ref } from 'vue'
-import { NavBar as VanNavBar, AddressEdit as VanAddressEdit } from 'vant'
 import type { AddressEditInfo } from 'vant'
 import { getRegion, addAddress, getAddressInfo, deleteAddress } from '@/api/getData'
 import { useRoute } from 'vue-router'

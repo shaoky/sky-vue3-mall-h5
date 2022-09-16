@@ -13,8 +13,8 @@
       placeholder="请输入短信验证码"
     >
       <template #button>
-        <van-button size="small" type="primary" @click="sendSms" style="color: #f00;" v-if="!isGetSms">获取验证码</van-button>
-        <van-button size="small" type="primary" v-else>重新获取({{countdown}}s)</van-button>
+        <span @click="sendSms" style="color: #f00;" v-if="!isGetSms">获取验证码</span>
+        <span v-else>重新获取({{countdown}}s)</span>
       </template>
     </van-field>
 
@@ -25,7 +25,7 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import { useRouter, useRoute } from 'vue-router';
-import { NavBar as VanNavBar, Field as VanField, Toast } from 'vant'
+import { Toast } from 'vant'
 import { getSms, login } from '@/api/getData'
 import { phoneValidate } from '@/utils/validate'
 

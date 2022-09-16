@@ -7,9 +7,6 @@
     </div>
   </div>
 </template>
-<script setup lang="ts">
-import { Button as VanButton } from 'vant'
-</script>
 <style lang="scss" scoped>
 .header{
   padding: 30px 0;

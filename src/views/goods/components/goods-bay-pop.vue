@@ -36,7 +36,8 @@
 </template>
 <script setup lang="ts">
 import { ref, defineProps, defineExpose, defineEmits } from 'vue'
-import { Popup as VanPopup, Stepper as VanStepper, Toast, ImagePreview } from 'vant'
+import { Toast, ImagePreview } from 'vant'
+import 'vant/es/image-preview/style'
 import { Models } from '@/rapper'
 
 type GoodsInfo = Models['GET/h5/goods/info']['Res']['data']['info']

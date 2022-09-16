@@ -18,7 +18,6 @@
 <script setup lang="ts">
 import { ref, onActivated } from 'vue'
 import { useRoute } from 'vue-router'
-import { List as VanList } from 'vant'
 import { getGoodsList } from '@/api/getData'
 import Goods from '@/components/goods.vue'
 import Search from './components/search-input.vue'

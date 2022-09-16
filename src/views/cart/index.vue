@@ -33,13 +33,7 @@
 <script setup lang="ts">
 import { ref, reactive, computed } from 'vue'
 import WebFooter from '@/components/web-footer.vue'
-import { 
-  NavBar as VanNavBar,
-  Stepper as VanStepper,
-  ActionSheet as VanActionSheet,
-  SubmitBar as VanSubmitBar,
-  Toast
-} from 'vant'
+import { Toast } from 'vant'
 import { deleteCart, getCartList, updateCart } from '@/api/getData'
 import { Models } from '@/rapper/index'
 import router from '@/router';

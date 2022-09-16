@@ -45,14 +45,7 @@
 </template>
 <script setup lang="ts">
 import { ref } from 'vue'
-import {
-  Tabs as VanTabs,
-  Tab as VanTab,
-  Icon as VanIcon,
-  Button as VanButton,
-  List as VanList,
-  Toast
-} from 'vant'
+import { Toast } from 'vant'
 import { getOrderList, deleteOrder, cancelOrder } from '@/api/getData'
 import Goods from './components/goods.vue'
 import pullAllBy from 'lodash/pullAllBy'

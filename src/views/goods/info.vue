@@ -48,14 +48,7 @@ import { ref } from 'vue'
 import { getGoodsInfo, addCart, addGoodsCollect, deleteGoodsCollect } from '@/api/getData'
 import { useRoute, useRouter } from 'vue-router'
 import GoodsBayPop from './components/goods-bay-pop.vue'
-import { 
-  Swipe as VanSwipe,
-  SwipeItem as VanSwipeItem,
-  Tabs as VanTabs,
-  Tab as VanTab,
-  Icon as VanIcon,
-  Toast
-} from 'vant'
+import { Toast } from 'vant'
 import { Models } from '@/rapper'
 
 type GoodsInfoModel = Models['GET/h5/goods/info']['Res']['data']['info']

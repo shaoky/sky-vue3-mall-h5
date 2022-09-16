@@ -24,7 +24,6 @@
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 import WebFooter from '@/components/web-footer.vue'
-import { Sidebar as VanSidebar, SidebarItem as VanSidebarItem } from 'vant'
 import { getCategoryList } from '@/api/getData'
 import { Models } from '@/rapper'
 
