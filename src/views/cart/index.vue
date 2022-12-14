@@ -22,6 +22,7 @@
         </div>
       </div>
     </div>
+    <van-empty description="暂无商品" v-if="cartList.length === 0" />
   </div>
   <van-submit-bar :price="priceSum" button-text="提交订单" @submit="onSubmit">
     <img src="/public/icon_unselected.png" class="allBtn" @click="onSelectAll" v-if="!isSelectAll" />
@@ -41,8 +42,8 @@ import router from '@/router';
 type CART = Models['GET/h5/cart/list']['Res']['data']['list']
 
 let cartList = ref<CART>([])
-let flag = ref<boolean>(false)
-let timeValue = ref<number>(0)
+// let flag = ref<boolean>(false)
+// let timeValue = ref<number>(0)
 let timer = reactive<any>({})
 let show = ref<boolean>(false)
 let actions = ref([

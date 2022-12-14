@@ -10,6 +10,7 @@
     </div>
     <div class="add" @click="$router.push({'name': 'addressAdd'})">新增地址</div>
   </div>
+  <van-empty description="暂无地址" v-if="addressList.length === 0" />
 </template>
 <script setup lang="ts">
 import { ref } from 'vue'

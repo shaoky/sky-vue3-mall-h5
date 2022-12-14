@@ -14,6 +14,7 @@
       </div>
     </div>
   </div>
+  <van-empty description="暂无数据" v-if="goods.length === 0" />
 </template>
 <script setup lang="ts">
 import { ref } from 'vue'
