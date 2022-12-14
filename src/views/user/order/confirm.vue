@@ -66,15 +66,17 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
-import { getAddressDefault, getOrderGoodsPreview, getOrderPreview, createOrder } from '@/api/getData'
+import { getAddressDefault, getAddressInfo, getOrderGoodsPreview, getOrderPreview, createOrder } from '@/api/getData'
 import { Models } from '@/rapper'
+import { useStore } from '@/store/index'
+
 
 type addressModel= Models['GET/h5/user/address/default']['Res']['data']['info']
 type goodsModel= Models['GET/h5/order/preview']['Res']['data']['goodsList']
 
 const route = useRoute()
 const router = useRouter()
-
+const store = useStore()
 
 let address = ref<addressModel>()
 let goodsList = ref<goodsModel>([])
@@ -88,8 +90,13 @@ let remark = ref<string>('')
 // })
 
 const initData = async() => {
-  const res = await getAddressDefault()
-  address.value = res.info
+  if (store.orderAddressId) {
+    const res = await getAddressInfo({id: store.orderAddressId})
+    address.value = res.info
+  } else {
+    const res = await getAddressDefault()
+    address.value = res.info
+  }
 
   if (route.query.type === 'goods') {
     const data = await getOrderGoodsPreview({
@@ -114,7 +121,10 @@ const initData = async() => {
 
 const goAddress = () => {
   router.push({
-    name: 'address'
+    name: 'address',
+    query: {
+      status: 1
+    }
   })
 }
 

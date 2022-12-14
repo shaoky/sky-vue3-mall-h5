@@ -2,7 +2,7 @@
   <van-nav-bar title="收货地址" fixed left-arrow @click-left="onClickLeft" />
   <div class="address">
     <div class="address-item" v-for="item in addressList">
-      <div class="left">
+      <div class="left" @click="onClick(item)">
         <div class="name">{{item.userName}} {{item.userTel}}</div>
         <div class="content"><span class="tag" v-if="item.isDefault">默认</span>{{item.province}}{{item.city}}{{item.county}}{{item.address}}</div>
       </div>
@@ -15,8 +15,14 @@
 import { ref } from 'vue'
 import { getAddressList } from '@/api/getData'
 import { Models } from '@/rapper/index'
+import { useRoute } from 'vue-router'
+import { useStore } from '@/store/index'
 
-let addressList = ref<Models['GET/h5/user/address/list']['Res']['data']['list']>([])
+type Address = Models['GET/h5/user/address/list']['Res']['data']['list'][0]
+
+let addressList = ref<Address[]>([])
+let route = useRoute()
+let store = useStore()
 
 const initData = () => {
   _getAddressList()
@@ -25,6 +31,13 @@ const initData = () => {
 const _getAddressList = async() => {
   const res = await getAddressList()
   addressList.value = res.list
+}
+
+const onClick = async(item: Address) => {
+  if (route.query.status && route.query.status === '1') {
+    store.updateOrderAddressId(item.id)
+    history.back()
+  }
 }
 
 const onClickLeft = () => {
