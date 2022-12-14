@@ -19,7 +19,7 @@ export default async function<T extends keyof IModels> (
             user = JSON.parse(userData)
         }
         let urlRep = url.replace(/GET/g, '')
-        urlRep = urlRep.replace(/POST/g, '')
+                        .replace(/POST/g, '')
 
         if (url.indexOf('GET') > -1) {
             method = 'get'
