@@ -10,6 +10,13 @@
     </div>
   </div>
 
+  <div class="address" v-if="!address" @click="goAddress">
+    <div class="left">添加地址</div>
+    <div class="icon">
+      <van-icon name="arrow"></van-icon>
+    </div>
+  </div>
+
   <div class="order">
     <div class="order-title">
       <van-icon name="orders-o"></van-icon>
