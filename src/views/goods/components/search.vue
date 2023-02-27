@@ -1,24 +1,31 @@
 <template>
-<!-- :style="{ height: searchHeight }" -->
-  <div class="search-popup" :class="{'full-screen': isSearchBtn}" >
+  <div class="search">
     <div class="header">
-      <van-icon name="arrow-left" @click="onBack"></van-icon>
       <div class="box">
         <van-icon name="search"></van-icon>
-        <van-field v-model="searchValue" placeholder="请输入关键词" clearable @focus="onFocus" />
+        <van-field v-model="searchValue" placeholder="请输入关键词" clearable autofocus @focus="onFocus" />
       </div>
-      <div class="btn" v-show="isSearchBtn" @click="onSearch">搜索</div>
+      <div class="btn" v-show="isSearch" @click="onSearch(searchValue)">搜索</div>
     </div>
-    <div class="list" v-show="isSearchBtn">
+
+    <!-- 搜索结果 -->
+    <div class="list" v-if="isSearch && searchValue.length > 0">
       <div class="item" v-for="item in keywordList">
-        <div class="name" @click="onKeyword(item)">{{item.keyword}}</div>
+        <div class="name" @click="onSearch(item.keyword)">{{item.keyword}}</div>
         <div class="count">约{{item.count}}个结果</div>
       </div>
+    </div>
+
+    <!-- 热门搜索 -->
+    <div class="hot-search" v-if="isSearch && searchValue.length === 0">
+      <div class="title">热门搜索</div>
+      <span v-for="item in searchKeywordList" :key="item.id" @click="onSearch(item.name)">{{item.name}}</span>
+      <!-- <div class="clear"></div> -->
     </div>
   </div>
 </template>
 <script setup lang="ts">
-import { ref, defineEmits, onActivated } from 'vue'
+import { ref } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 
 interface Keyword {
@@ -26,13 +33,19 @@ interface Keyword {
   count?: number;
 }
 
+interface Hot {
+  id: number;
+  name: string;
+}
+
 const route = useRoute()
 const router = useRouter()
-const emit = defineEmits(['updateKeyword'])
+const emit = defineEmits(['updateKeyword', 'update:isSearch'])
+defineProps({
+  'isSearch': Boolean
+})
 
-let searchValue = ref<string>('')
-let searchHeight = ref<string>('100px')
-let isSearchBtn = ref<boolean>(false)
+let searchValue = ref('')
 let keywordList = ref<Keyword[]>([
   {
     keyword: '衣服',
@@ -84,49 +97,61 @@ let keywordList = ref<Keyword[]>([
   },
 ])
 
+let searchKeywordList = ref<Hot[]>([
+  {
+    id: 1,
+    name: '葡萄酒',
+  },
+  {
+    id: 2,
+    name: '衣服',
+  },
+  {
+    id: 3,
+    name: '餐桌',
+  },
+  {
+    id: 4,
+    name: '篮球',
+  },
+  {
+    id: 5,
+    name: '游戏显卡',
+  },
+  {
+    id: 6,
+    name: '羽毛球拍',
+  },
+  {
+    id: 7,
+    name: '洗面奶',
+  },
+  {
+    id: 8,
+    name: '手机',
+  }
+])
+
 const initData = () => {
-  searchValue.value = route.query.keyword as string
+  searchValue.value = route.query.keyword as string || ''
 }
 
 // 搜索获取焦点
 const onFocus = () => {
-  isSearchBtn.value = true
-  searchHeight.value = '100%'
+  emit('update:isSearch', true)
 }
 
 //搜索按钮
-const onSearch = () => {
-  onKeyword({
-    keyword: searchValue.value
-  })
-  isSearchBtn.value = false
-}
-
-// 返回
-const onBack = () => {
-  if (isSearchBtn.value) {
-    searchHeight.value = '100px'
-    isSearchBtn.value = false
-  } else {
-    router.back()
-  }
-}
-
-const onKeyword = (data: Keyword) => {
+const onSearch = async(keyword?: string) => {
+  searchValue.value = keyword || ''
+  emit('updateKeyword', keyword)
   router.replace({
     name: 'search',
     query: {
-      keyword: data.keyword
+      keyword
     }
   })
-  searchValue.value = data.keyword
-  isSearchBtn.value = false
-  emit('updateKeyword', data.keyword)
 }
-
-onActivated(() => {
-  initData()
-})
 
 initData()
 </script>
@@ -140,21 +165,15 @@ initData()
   margin: 8px 15px 0 15px;
   font-size: 46px;
 }
-.search-popup {
-  position: relative;
-  top: 0;
-  width: 100%;
-  height: 100px;
+.search {
   background: #f6f6f6;
-  z-index: 999;
-  overflow-x: hidden;
   &.full-screen {
     height: 100%;
   }
   .header {
     display: flex;
     height: 100px;
-    padding: 0 20px 0 0;
+    padding: 0 20px;
     padding-top: 20px;
     background: #fff;
     font-size: 28px;
@@ -202,6 +221,30 @@ initData()
         flex: 1;
       }
     }
+  }
+}
+
+.hot-search {
+  padding: 20px;
+  background: #fff;
+  .title {
+    font-size: 30px;
+    color: #232326;
+    margin-bottom: 20px;
+  }
+  span {
+    float: left;
+    margin: 0 20px 20px 0;
+    padding: 0 20px;
+    height: 52px;
+    line-height: 52px;
+    font-size: 24px;
+    color: #666;
+    background: #f4f4f4;
+    border-radius: 10px;
+  }
+  &::after {
+    @include afterClearBoth;
   }
 }
 </style>

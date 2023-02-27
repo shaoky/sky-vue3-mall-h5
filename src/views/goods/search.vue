@@ -1,12 +1,13 @@
 <template>
-  <search @update-keyword="updateKeyword"></search>
-  <screen class="screen" @change="screenChange"></screen>
+  <search @update-keyword="updateKeyword" v-model:isSearch="isSearch"></search>
+  <screen class="screen" @change="screenChange" v-show="!isSearch"></screen>
   <van-list
     v-model:loading="loading"
     :finished="finished"
     finished-text="没有更多了"
     @load="_getGoodsList"
     class="goods"
+    v-if="!isSearch"
   >
     <goods 
       v-for="item in goodsList"
@@ -16,13 +17,13 @@
   </van-list>
 </template>
 <script setup lang="ts">
-import { ref, onActivated } from 'vue'
+import { ref } from 'vue'
 import { useRoute } from 'vue-router'
 import { getGoodsList } from '@/api/getData'
 import Goods from '@/components/goods.vue'
-import Search from './components/search-input.vue'
-import Screen from './components/search-screen.vue'
-import { Direction } from './components/search-screen.vue'
+import Search from './components/search.vue'
+import Screen from './components/screen.vue'
+import { Direction } from './components/screen.vue'
 import { Models } from '@/rapper'
 
 type GoodsListModel = Models['GET/h5/goods/list']['Res']['data']['list']
@@ -30,14 +31,17 @@ type GoodsListModel = Models['GET/h5/goods/list']['Res']['data']['list']
 let route = useRoute()
 
 let goodsList = ref<GoodsListModel>([])
-let loading = ref<boolean>(false)
-let finished = ref<boolean>(false)
-let page = ref<number>(1)
-let size = ref<number>(10)
-let keyword = ref<string>('')
+let loading = ref(false)
+let finished = ref(false)
+let page = ref(1)
+let size = ref(10)
+let keyword = ref('')
+let isSearch = ref(false)
 
 const initData = () => {
-  goodsList.value = []
+  if (!route.query.keyword) {
+    isSearch.value = true
+  }
   keyword.value = route.query.keyword as string
 }
 
@@ -63,7 +67,8 @@ const updateKeyword = (value: string) => {
   keyword.value = value
   goodsList.value = []
   finished.value = false
-  _getGoodsList()
+  isSearch.value = false
+  // _getGoodsList()
 }
 
 const screenChange = (index: number, value: Direction) => {
@@ -73,12 +78,11 @@ const screenChange = (index: number, value: Direction) => {
   _getGoodsList()
 }
 
-onActivated(() => {
-  if (route.query.keyword !== keyword.value) {
-    initData()
-    _getGoodsList()
-  }
-})
+// onActivated(() => {
+//   if (route.query.keyword !== keyword.value) {
+//     initData()
+//   }
+// })
 
 initData()
 </script>

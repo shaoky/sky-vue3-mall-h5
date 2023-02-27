@@ -1,6 +1,8 @@
 <template>
-
-  <search class="search"></search>
+  <div class="search" @click="clickSearch">
+    <van-icon name="search"></van-icon>
+    <div class="text">搜索</div>
+  </div>
   
   <div class="banner">
     <van-swipe class="my-swipe" :autoplay="3000" indicator-color="white">
@@ -42,9 +44,12 @@ import Goods from '@/components/goods.vue'
 import WebFooter from '@/components/web-footer.vue'
 import Search from './components/search.vue'
 import { Models } from '@/rapper'
+import { useRouter } from 'vue-router'
 
 type GoodsListModel = Models['GET/h5/goods/list']['Res']['data']['list']
 type adModel = Models['GET/h5/index']['Res']['data']['adList']
+
+const router = useRouter()
 
 let adList = ref<adModel>([])
 let iconList = ref<adModel>([])
@@ -79,12 +84,31 @@ const _getGoodsList = async() => {
   }
 }
 
+const clickSearch = () => {
+  router.push({name: 'search'})
+}
 </script>
 
 <style lang="scss" scoped>
-
 .search {
+  display: flex;
+  align-items: center;
   margin: 20px;
+  padding-left: 20px;
+  height: 60px;
+  background: #f4f4f4;
+  .van-icon {
+    margin-top: 6px;
+    color: #999;
+    font-size: 32px;
+  }
+  .text {
+    flex: 1;
+    margin-left: 10px;
+    font-size: 24px;
+    color: #999;
+    margin-right: 20px;
+  }
 }
 .nav {
   display: flex;
