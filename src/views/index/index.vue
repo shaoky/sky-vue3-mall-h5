@@ -70,7 +70,7 @@ const _getGoodsList = async() => {
     page: page.value,
     size: size.value
   })
-  goodsList.value = [...res.list, ...goodsList.value]
+  goodsList.value = [...goodsList.value, ...res.list]
   loading.value = false
   if (res.list.length < size.value) {
     finished.value = true
